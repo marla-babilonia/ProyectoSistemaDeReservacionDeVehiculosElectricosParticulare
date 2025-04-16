@@ -1,12 +1,12 @@
 package information;
 
-public class Stations {
+public class AvailableStations {
 
     private String name;
     private int maxCapacity;
     private int currentCapacity;
 
-    public Stations(String name, int maxCapacity, int currentCapacity) {
+    public AvailableStations(String name, int maxCapacity, int currentCapacity) {
         this.name = name;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = currentCapacity;

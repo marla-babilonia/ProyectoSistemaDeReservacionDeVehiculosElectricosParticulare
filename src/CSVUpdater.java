@@ -1,4 +1,4 @@
-import information.Stations;
+import information.AvailableStations;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

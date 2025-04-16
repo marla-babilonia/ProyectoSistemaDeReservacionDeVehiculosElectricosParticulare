@@ -1,4 +1,4 @@
-import information.Stations;
+import information.AvailableStations;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -9,8 +9,8 @@ import java.util.List;
 
 public class CSVLoader {
 
-    public static List<Stations> loadStations() {
-        List<Stations> stations = new ArrayList<>();
+    public static List<AvailableStations> loadStations() {
+        List<AvailableStations> stations = new ArrayList<>();
 
         try {
             InputStream inputStream = CSVLoader.class.getResourceAsStream("/stations.csv");
@@ -28,7 +28,7 @@ public class CSVLoader {
                     int maxCapacity = Integer.parseInt(parts[1]);
                     int currentCapacity = Integer.parseInt(parts[2]);
 
-                    stations.add(new Stations(name, maxCapacity, currentCapacity));
+                    stations.add(new AvailableStations(name, maxCapacity, currentCapacity));
                 }
             }
 
