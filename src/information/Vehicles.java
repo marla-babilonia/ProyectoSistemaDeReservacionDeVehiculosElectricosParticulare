@@ -1,5 +1,12 @@
 package information;
 
+
+/* 
+ * This class is made in a stadard way to do class,
+ * we have the variables at the begining,
+ * followed by the constroctor and the the setters and getters.
+ */
+
 public class Vehicles {
     int id;
     String tipo;
@@ -17,6 +24,9 @@ public class Vehicles {
         this.lugar = lugar;
         this.Disponible = Disponible;
     }
+
+    // Setters and Getters.
+
     public int getID() {
         return id;
     }

@@ -3,22 +3,33 @@ package information;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/* 
+ * This class is made in a stadard way to do class,
+ * we have the variables at the begining,
+ * followed by the constroctor and the the setters and getters.
+ */
+
 public class Users {
     
     int studentid;
     String studentname;
     String studentemail;
     int studentphone;
-    public static CD tipo;
+    public static OC tipo;
     public static List<Users> listaUsuarios = new ArrayList<>();
 
-    public static enum CD {
+    /*
+     * We use ENUMS in order to decide if the USER is a client, owner or both.
+     */
+
+    public static enum OC {
         CLIENT,
         OWNER,
         OWNERANDCLIENT,
     }
 
-    public void User(String studentname, int studentid, String studentemail, int studentphone, CD tipo) {
+    public void User(String studentname, int studentid, String studentemail, int studentphone, OC tipo) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
@@ -26,6 +37,8 @@ public class Users {
         this.tipo = tipo;
         listaUsuarios.add(this);
     }
+
+    // Setters and Getters.
 
     public static List<Users> getListaUsuarios() {
         return listaUsuarios;
@@ -63,17 +76,12 @@ public class Users {
         this.studentphone = studentphone;
     }
 
-    public CD getTipo() {
+    public OC getTipo() {
         return tipo;
     }
 
-    public void setTipo(CD tipo) {
+    public void setTipo(OC tipo) {
         this.tipo = tipo;
-    }
-
-    void debug_enter_USER() {
-        System.out.println("you have entered as a USER");
-
     }
 
 
