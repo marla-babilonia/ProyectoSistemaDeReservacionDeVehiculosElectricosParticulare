@@ -32,7 +32,7 @@ public class Vehicles {
     }
 
     public void setID(int ID) {
-        this.id = id;
+        this.id = ID;
     }
 
     public String getTipo() {
