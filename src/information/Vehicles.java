@@ -1,5 +1,6 @@
 package information;
 
+import information.AvailableStations.LOCATION;
 
 /* 
  * This class is made in a stadard way to do class,
@@ -9,20 +10,25 @@ package information;
 
 public class Vehicles {
     int id;
-    String tipo;
-    String descripcion;
-    int horario;
-    String lugar;
-    Boolean Disponible;
+    private VEHICLE_TYPE vehicleType;
+    String description;
+    int schedule;
+    LOCATION location;
+    Boolean available;
 
+    public static enum VEHICLE_TYPE {
+        SKOOTER,
+        BICYCLE,
+        SKATEBOARD,
+    }
 
-    public void Vehiculo(int id, String tipo, String descripcion, int horario, String lugar, Boolean Disponible) {
+    public Vehicles(int id, VEHICLE_TYPE vehicleType, String description, int schedule, LOCATION location, Boolean available) {
         this.id = id;
-        this.tipo = tipo;
-        this.descripcion = descripcion;
-        this.horario = horario;
-        this.lugar = lugar;
-        this.Disponible = Disponible;
+        this.vehicleType = vehicleType;
+        this.description = description;
+        this.schedule = schedule;
+        this.location = location;
+        this.available = available;
     }
 
     // Setters and Getters.
@@ -32,45 +38,46 @@ public class Vehicles {
     }
 
     public void setID(int ID) {
-        this.id = id;
+        this.id = ID;
     }
 
-    public String getTipo() {
-        return tipo;
+    public VEHICLE_TYPE getVehicleType() {
+        return this.vehicleType;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setVehicleType(VEHICLE_TYPE type) {
+        this.vehicleType = type;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getdescription() {
+        return description;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setdescription(String description) {
+        this.description = description;
     }
 
-    public int getHorario() {
-        return horario;
+    public int getschedule() {
+        return schedule;
     }
 
-    public void setHorario(int horario) {
-        this.horario = horario;
+    public void setschedule(int schedule) {
+        this.schedule = schedule;
     }
 
-    public String getLugar() {
-        return lugar;
+    public LOCATION getLugar() {
+        return location;
     }
 
-    public void setLugar(String lugar) {
-        this.lugar = lugar;
-    }
-    public Boolean getDisponible() {
-        return Disponible;
+    public void setLugar(String location) {
+        this.location = EnumsHandler.getLocation(location);
     }
 
-    public void setDisponible(Boolean Disponible) {
-        this.Disponible = Disponible;
+    public Boolean getavailable() {
+        return available;
+    }
+
+    public void setavailable(Boolean available) {
+        this.available = available;
     }
 }

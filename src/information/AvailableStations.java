@@ -2,18 +2,26 @@ package information;
 
 public class AvailableStations {
 
-    private String name;
+    private LOCATION locationName;
     private int maxCapacity;
     private int currentCapacity;
 
-    public AvailableStations(String name, int maxCapacity, int currentCapacity) {
-        this.name = name;
+    public static enum LOCATION {
+        EDIFICIO_STEFANI,
+        CENTRO_DE_ESTUDIANTES,
+        EDIFICIO_DE_BIOLOGIA,
+        EDIFICIO_INGENIERIA_QUIMICA,
+        EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS,
+    }
+
+    public AvailableStations(LOCATION locationName, int maxCapacity, int currentCapacity) {
+        this.locationName = locationName;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = currentCapacity;
     }
 
-    public String getName() {
-        return name;
+    public LOCATION getName() {
+        return this.locationName;
     }
 
     public int getMaxCapacity() {

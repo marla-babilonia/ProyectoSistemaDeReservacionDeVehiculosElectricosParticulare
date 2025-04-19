@@ -16,26 +16,26 @@ public class Users {
     String studentname;
     String studentemail;
     int studentphone;
-    public static OC tipo;
+    private OWNER_OR_CLIENT userType;
     public static List<Users> listaUsuarios = new ArrayList<>();
 
     /*
      * We use ENUMS in order to decide if the USER is a client, owner or both.
      */
 
-    public static enum OC {
+    public static enum OWNER_OR_CLIENT {
         CLIENT,
         OWNER,
         OWNERANDCLIENT,
     }
 
-    public void User(String studentname, int studentid, String studentemail, int studentphone, OC tipo) {
+    public Users(String studentname, int studentid, String studentemail, int studentphone, OWNER_OR_CLIENT userType) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
         this.studentphone = studentphone;
-        this.tipo = tipo;
-        listaUsuarios.add(this);
+        this.userType = userType;
+        
     }
 
     // Setters and Getters.
@@ -76,12 +76,12 @@ public class Users {
         this.studentphone = studentphone;
     }
 
-    public OC getTipo() {
-        return tipo;
+    public OWNER_OR_CLIENT getTipo() {
+        return userType;
     }
 
-    public void setTipo(OC tipo) {
-        this.tipo = tipo;
+    public void setTipo(OWNER_OR_CLIENT userType) {
+        this.userType = userType;
     }
 
 
