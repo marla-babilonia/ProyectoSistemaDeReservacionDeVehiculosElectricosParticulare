@@ -6,17 +6,18 @@ public class Main {
 
         Scanner scan = new Scanner(System.in);
         LocalTime hours = LocalTime.now();
-        System.out.println("Please insert a number from 1 to 3. USER 1, OPERATOR 2, CLOSE THE PROGRAM 3.");
+        System.out.println("Welcome back OPERATOR. For seeing the STATUS of VEHICLES enter 1, For seeing the RESERVATIONS enter 2, To CLOSE THE PROGRAM enter 3.");
         //TODO add posible errors (what if its is not a number, or a diferent number aka not 1,2 or 3)
         
         int option = scan.nextInt(); 
         while(option != 3) {
-
-            //enters in USER.
+            if(option != 1 && option != 2) {
+                System.out.println("PLEASE enter only the NUMBERS 1, 2 and 3.");
+            }
 
             if(option == 1) {
 
-                //checks if services are open (AKA: is between 7am and 6pm).
+                //Enter into STATUS.
 
                 if(hours.getHour() < 7 || hours.getHour() >= 16){
                 System.out.println("Sorry, our rent system is only open from 7:00am-6:00pm.");
@@ -28,7 +29,7 @@ public class Main {
                  
             }
 
-            //enters in OPERATOR.
+            //Enters into RESERVATIONS.
 
             if(option == 2) {
 
