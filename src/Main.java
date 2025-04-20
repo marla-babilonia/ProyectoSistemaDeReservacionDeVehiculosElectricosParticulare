@@ -42,3 +42,5 @@ public class Main {
         scan.close();
     }
 }
+
+// anadir que llame a todos los csvs una vez se abre el programa

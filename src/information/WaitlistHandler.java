@@ -4,11 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import information.AvailableStations.LOCATION;
 
-public class Waitlist {
+public class WaitlistHandler {
     private LOCATION location;
     private Queue<Users> queue;
     
-    public Waitlist(LOCATION location){
+    public WaitlistHandler(LOCATION location){
         this.location = location;
         this.queue = new LinkedList<>();
     }
