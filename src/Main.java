@@ -1,10 +1,10 @@
+import information.VehiclesHandler;
 import java.time.LocalTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-
+        VehiclesHandler vh = new VehiclesHandler();
         Scanner scan = new Scanner(System.in);
         LocalTime hours = LocalTime.now();
         System.out.println("Welcome back OPERATOR. For seeing the STATUS of VEHICLES enter 1, For seeing the RESERVATIONS enter 2, To CLOSE THE PROGRAM enter 3.");
@@ -23,6 +23,8 @@ public class Main {
                         //TODO add a way to close the program || inmediatly turn back to the option screen.
                     }
                     System.out.println("List of VEHICLES");
+                    System.out.println(vh.getAvailableVehicles());
+
                     break;
                 case 2: 
 

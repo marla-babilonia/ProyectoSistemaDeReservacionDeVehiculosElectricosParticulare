@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class VehiclesHandler {
   protected HashSet<Vehicles> availableVehicles = new HashSet<>();
-
+    protected HashSet<Vehicles> allVehicles = new HashSet<>();
   
     // Agregar vehículos iniciales si están disponibles
     public void AvailableVehicles(Set<Vehicles> allVehicles) {
