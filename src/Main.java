@@ -132,11 +132,14 @@ public class Main {
 
                                         System.out.println("Enter the new ID:");
                                         int newVehicleId = scan.nextInt();
-
+                                        while (stations.isIdUsed(newVehicleId)){
+                                            System.out.println("You cant use the same ID that is alredy in used.");
+                                            newVehicleId = scan.nextInt();
+                                        }
                                         Vehicles newVehicle = new Vehicles(newVehicleId, type, description, 0, AvailableStations.LOCATION.CENTRO_DE_ESTUDIANTES, availability);
 
                                         stations.centroEstudiantesVehicles.add(newVehicle);
-                                        stations.allVehicles.add(newVehicle);
+                                        stations.allVehicles.add(newVehicle.getID());
 
                                         System.out.println("Vehicle added successfully! ID: " + newVehicleId);
                                         break;
@@ -249,11 +252,14 @@ public class Main {
 
                                     System.out.println("Enter the new ID:");
                                     int newVehicleId = scan.nextInt();
-
+                                    while (stations.isIdUsed(newVehicleId)){
+                                        System.out.println("You cant use the same ID that is alredy in used.");
+                                        newVehicleId = scan.nextInt();
+                                    }
                                     Vehicles newVehicle = new Vehicles(newVehicleId, type, description, 0, AvailableStations.LOCATION.EDIFICIO_STEFANI, availability);
 
                                     stations.stefaniVehicles.add(newVehicle);
-                                    stations.allVehicles.add(newVehicle);
+                                    stations.allVehicles.add(newVehicle.getID());
 
                                     System.out.println("Vehicle added successfully! ID: " + newVehicleId);
                                     break;
@@ -366,11 +372,14 @@ public class Main {
 
                                     System.out.println("Enter the new ID:");
                                     int newVehicleId = scan.nextInt();
-
+                                    while (stations.isIdUsed(newVehicleId)){
+                                        System.out.println("You cant use the same ID that is alredy in used.");
+                                        newVehicleId = scan.nextInt();
+                                    }
                                     Vehicles newVehicle = new Vehicles(newVehicleId, type, description, 0, AvailableStations.LOCATION.EDIFICIO_DE_BIOLOGIA, availability);
 
                                     stations.biologiaVehicles.add(newVehicle);
-                                    stations.allVehicles.add(newVehicle);
+                                    stations.allVehicles.add(newVehicle.getID());
 
                                     System.out.println("Vehicle added successfully! ID: " + newVehicleId);
                                     break;
@@ -483,11 +492,14 @@ public class Main {
 
                                     System.out.println("Enter the new ID:");
                                     int newVehicleId = scan.nextInt();
-
+                                    while (stations.isIdUsed(newVehicleId)){
+                                        System.out.println("You cant use the same ID that is alredy in used.");
+                                        newVehicleId = scan.nextInt();
+                                    }
                                     Vehicles newVehicle = new Vehicles(newVehicleId, type, description, 0, AvailableStations.LOCATION.EDIFICIO_INGENIERIA_QUIMICA, availability);
 
                                     stations.quimicaVehicles.add(newVehicle);
-                                    stations.allVehicles.add(newVehicle);
+                                    stations.allVehicles.add(newVehicle.getID());
 
                                     System.out.println("Vehicle added successfully! ID: " + newVehicleId);
                                     break;
@@ -600,11 +612,14 @@ public class Main {
 
                                     System.out.println("Enter the new ID:");
                                     int newVehicleId = scan.nextInt();
-
+                                    while (stations.isIdUsed(newVehicleId)){
+                                        System.out.println("You cant use the same ID that is alredy in used.");
+                                        newVehicleId = scan.nextInt();
+                                    }
                                     Vehicles newVehicle = new Vehicles(newVehicleId, type, description, 0, AvailableStations.LOCATION.EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS, availability);
 
                                     stations.adminEmpresasVehicles.add(newVehicle);
-                                    stations.allVehicles.add(newVehicle);
+                                    stations.allVehicles.add(newVehicle.getID());
 
                                     System.out.println("Vehicle added successfully! ID: " + newVehicleId);
                                     break;
