@@ -47,13 +47,12 @@ public class VehiclesHandler {
   }
 
   // Remover vehículo manualmente
-  public boolean removeVehicle(int id) {
+  public void removeVehicle(HashSet<Vehicles> availableVehicles, int id) {
       Vehicles exists = findById(id);
       if (exists != null) {
           availableVehicles.remove(exists);
-          return true;
       }
-      return false;
+
   }
 
   // Obtener todos los vehículos disponibles
