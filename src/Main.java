@@ -15,7 +15,7 @@ public class Main {
         int option = 0; 
         
         while(option != 3) {
-            System.out.println("For seeing the STATUS of VEHICLES enter 1, For seeing the RESERVATIONS enter 2, To CLOSE THE PROGRAM enter 3.");
+            System.out.println("For seeing the STATUS of VEHICLES enter 1, For seeing the USERS enter 2, To CLOSE THE PROGRAM enter 3.");
             try{ // use a try to catch the error if operator inputs something that is not a number.
             option = scan.nextInt();
             switch (option) {
@@ -29,12 +29,12 @@ public class Main {
                     System.out.println("1 for CENTRO, 2 for STEFANI, 3 for BIOLOGIA, 4 for QUIMICA, 5 for ADEM ");
                     Option_Station = scan.nextInt();
                     switch (Option_Station) {
-                        case 1:
+                        case 1://lists vehicles segun su edificio
                         System.out.println("List of VEHICLES for CENTRO");
                         for (Vehicles v : stations.centroEstudiantesVehicles) {
                             System.out.println("ID: " + v.getID() + ", Type: " + v.getVehicleType() + ", Available: " + v.getavailable() + v.getdescription());
                         }
-                            System.out.println("Would you like to edit a vehicle? (yes=1 / no=2)");
+                            System.out.println("Would you like to edit a vehicle? (yes=1 / no=2)");//checks if operator wants to edit
                             int editOption = scan.nextInt();
                             if (editOption == 1) {
                                 
@@ -48,7 +48,7 @@ public class Main {
                                 editOption = scan.nextInt();
                                 switch (editOption) {
                                     case 1:
-                                        System.out.println("Enter the ID of the vechicle to edit: ");
+                                        System.out.println("Enter the ID of the vechicle to edit: ");//checks for id 
                                         vehicleId = scan.nextInt();
                                         for (Vehicles v : stations.centroEstudiantesVehicles) {
                                             if (v.getID() == vehicleId) {
@@ -59,7 +59,7 @@ public class Main {
                                         }
         
                                         if (!exists) {
-                                            System.out.println("That ID does not exist in this location.");
+                                            System.out.println("That ID does not exist in this location.");//if id does not exist you cant edit the vehicle
                                             break;
                                         }
                                         System.out.println("Set Availability;");
@@ -100,7 +100,7 @@ public class Main {
                                             System.out.println("That ID does not exist in this location.");
                                             break;
                                         }
-                                    System.out.println("Enter again the ID of the vehicle to confirm;");
+                                    System.out.println("Enter again the ID of the vehicle to confirm;");//makes the operator confirm that he does wahnt to remove the correct id.
                                         vehicleId = scan.nextInt();
                                         for (Vehicles v : stations.centroEstudiantesVehicles) {
                                             if (v.getID() == vehicleId) {
@@ -111,7 +111,7 @@ public class Main {
                                         break;
                                     case 4:
                                                                         
-                                        System.out.println("Enter the vehicle TYPE (1=BICYCLE, 2=SKOOTER, 3=SKATEBOARD):");
+                                        System.out.println("Enter the vehicle TYPE (1=BICYCLE, 2=SKOOTER, 3=SKATEBOARD):");//creates new vehicle to add
                                         int typeInput = scan.nextInt();
                                         VEHICLE_TYPE type = null;
                                         switch (typeInput) {
@@ -132,7 +132,7 @@ public class Main {
 
                                         System.out.println("Enter the new ID:");
                                         int newVehicleId = scan.nextInt();
-                                        while (stations.isIdUsed(newVehicleId)){
+                                        while (stations.isIdUsed(newVehicleId)){//makes sure that the id does not alredt exists
                                             System.out.println("You cant use the same ID that is alredy in used.");
                                             newVehicleId = scan.nextInt();
                                         }
@@ -150,7 +150,7 @@ public class Main {
                             }
                             break;
                         case 2:
-                        System.out.println("List of VEHICLES for STEFANI");
+                        System.out.println("List of VEHICLES for STEFANI");//repeat the case 1 but for stefani this time
                         for (Vehicles v : stations.stefaniVehicles) {
                             System.out.println("ID: " + v.getID() + ", Type: " + v.getVehicleType() + ", Available: " + v.getavailable() + v.getdescription());
                         }
