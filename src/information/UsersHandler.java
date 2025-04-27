@@ -77,7 +77,6 @@ public class UsersHandler {
         Users newUser = new Users(name, studentId, email, phone, type, credits, vehiclesOwned);
         users.add(newUser);
         System.out.println("User added successfully.");
-        scanner.close();
     }
 
     
