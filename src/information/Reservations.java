@@ -93,7 +93,7 @@ public class Reservations {
     @Override
     public String toString() {
         return String.format(
-            "Reservation[Student ID=%d, Vehicle ID=%d, Station=%s, Date=%02d/%02d, Start=%04d, End=%04d, Credits=%d]",
+            "Reservation[Student ID=%d, Vehicle ID=%d, Station=%s, Date=%02d/%02d, Start=%04d, End=%04d, Credits=" + creditCost + "]",
             student.getstudentid(),
             vehicle.getID(),
             EnumsHandler.formatStationName(station),
