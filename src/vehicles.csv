@@ -1,3 +1,10 @@
-802190093,1,BICYCLE,Blue mountain bike,Edificio de Biologia,true
-802190095,2,SKOOTER,Electric Skooter,Edificio Stefani,true
-802190095,3,SKATEBOARD,Wooden skateboard,Edificio Ingenieria Quimica,true
+802190093,1,BICYCLE,Blue mountain bike,Edificio de Biologia,true,4:26:1300-1500;1600-1800|5:1:0900-1000
+802190095,2,SKOOTER,Electric Skooter,Edificio Stefani,true,5:2:1000-1200
+802190095,3,SKATEBOARD,Wooden skateboard,Edificio Ingenieria Quimica,true,5:3:1100-1300
+802190097,4,BICYCLE,Green bicycle,Centro de Estudiantes,true,4:28:0900-1100
+802190099,5,SKOOTER,Yellow Skooter,Centro de Estudiantes,true,5:5:0800-1000
+802190101,6,BICYCLE,Mountain Bike,Edificio de Biologia,true,5:6:0900-1100
+802190101,7,SKATEBOARD,Electric Skateboard,Edificio Stefani,true,5:7:1300-1500
+802190093,8,SKOOTER,Blue Skooter,Edificio de Biologia,true,5:8:0900-1100
+802190097,9,BICYCLE,City Bike,Centro de Estudiantes,true,5:9:1400-1600
+802190099,10,SKATEBOARD,Red Skateboard,Edificio Ingenieria Quimica,true,5:10:1000-1200

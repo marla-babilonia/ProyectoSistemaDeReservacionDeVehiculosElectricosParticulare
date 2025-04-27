@@ -164,36 +164,31 @@ public class CSVLoader {
     
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                // 1) Skip blank lines
+                //Skip empty lines
                 if (line.isEmpty()) continue;
     
                 String[] parts = line.split(",");
-                // 3) Must have at least 6 columns
                 if (parts.length < 6) {
-                    System.out.println("  → skipping: not enough columns");
                     continue;
                 }
     
                 String ownerIdStr   = parts[0].trim();
                 String vehicleIdStr = parts[1].trim();
     
-                // 4) Validate that ownerId and vehicleId are numeric
+                //owner id and vehicle id are numbers
                 if (!ownerIdStr.matches("\\d+") || !vehicleIdStr.matches("\\d+")) {
-                    System.out.println("  → skipping: non-numeric IDs: ownerId=\"" 
-                                       + ownerIdStr + "\", vehicleId=\"" + vehicleIdStr + "\"");
                     continue;
                 }
     
-                // 5) Now safe to parse
+                //parse
                 int ownerId   = Integer.parseInt(ownerIdStr);
                 int vehicleID = Integer.parseInt(vehicleIdStr);
     
-                // 6) Parse the enum type (will throw if invalid)
+                //vehicle type
                 VEHICLE_TYPE vehicleType;
                 try {
                     vehicleType = VEHICLE_TYPE.valueOf(parts[2].trim().toUpperCase());
                 } catch (IllegalArgumentException iae) {
-                    System.out.println("  → skipping: invalid VEHICLE_TYPE: " + parts[2]);
                     continue;
                 }
     
@@ -201,18 +196,17 @@ public class CSVLoader {
                 LOCATION location  = EnumsHandler.getLocation(parts[4].trim());
                 boolean available  = Boolean.parseBoolean(parts[5].trim());
     
-                // 7) Find owner object
+
+    
+                String scheduleString = (parts.length >= 7) ? parts[6].trim() : "";
+                Map<Integer, Map<Integer, Set<TimeSlot>>> schedule = ScheduleHelper.expandSchedule(scheduleString);
+                
+    
+                // Find the owner by id and create the object
                 Users owner = findUserById(ownerId);
                 if (owner == null) {
-                    System.out.println("  → skipping: owner ID not found: " + ownerId);
                     continue;
                 }
-    
-                // 8) Build schedule (empty for now)
-                Map<Integer, Map<Integer, Set<TimeSlot>>> schedule =
-                    ScheduleHelper.createEmptySchedule();
-    
-                // 9) Finally, create and add
                 Vehicles v = new Vehicles(owner, vehicleID, vehicleType, description, schedule, location, available);
                 vehicles.add(v);
             }
