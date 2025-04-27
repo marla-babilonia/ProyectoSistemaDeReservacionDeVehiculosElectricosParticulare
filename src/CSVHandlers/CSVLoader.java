@@ -1,18 +1,18 @@
 package CSVHandlers;
-import information.Users.OWNER_OR_CLIENT;
-import information.Vehicles.VEHICLE_TYPE;
 import information.AvailableStations;
+import information.AvailableStations.LOCATION;
 import information.EnumsHandler;
 import information.Users;
+import information.Users.OWNER_OR_CLIENT;
 import information.Vehicles;
-import information.AvailableStations.LOCATION;
-
+import information.Vehicles.VEHICLE_TYPE;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CSVLoader {
 
@@ -91,9 +91,9 @@ public class CSVLoader {
         return users;
     }
 
-    public static List<Vehicles> loadVehicles() {
+    public static Set<Vehicles> loadVehicles() {
         
-        List<Vehicles> vehicles = new ArrayList<>();
+        Set<Vehicles> vehicles = new HashSet<>();
 
         try {
             InputStream inputStream = CSVLoader.class.getResourceAsStream("/vehicles.csv");

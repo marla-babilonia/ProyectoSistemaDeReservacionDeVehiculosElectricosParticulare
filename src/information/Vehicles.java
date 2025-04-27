@@ -65,11 +65,11 @@ public class Vehicles {
         this.schedule = schedule;
     }
 
-    public LOCATION getLugar() {
+    public LOCATION getLocation() {
         return location;
     }
 
-    public void setLugar(String location) {
+    public void setLocation(String location) {
         this.location = EnumsHandler.getLocation(location);
     }
 
