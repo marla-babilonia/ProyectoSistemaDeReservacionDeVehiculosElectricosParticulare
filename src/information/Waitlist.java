@@ -11,16 +11,21 @@ public class Waitlist {
     private LocalTime startTime;
     private LocalTime endTime;
     private double totalCredits;
+    private int month, date, start, end;
 
-    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION location, LocalTime startTime, LocalTime endTime, double totalCredits){
-        this.waitlistNum = waitlistNum;
-        this.user = user;
-        this.vehicle = vehicle;
-        this.location = location;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.totalCredits = totalCredits;
-    }
+    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION location, int month, int date, int start, int end, double totalCredits) {
+    this.waitlistNum = waitlistNum;
+    this.user = user;
+    this.vehicle = vehicle;
+    this.location = location;
+    this.month = month;
+    this.date = date;
+    this.start = start;
+    this.end = end;
+    this.startTime = LocalTime.of(start/100, start%100);
+    this.endTime = LocalTime.of(end/100, end%100);
+    this.totalCredits = totalCredits;
+  }
 
     // Setters and Getters.
 
@@ -50,6 +55,22 @@ public class Waitlist {
     }
     public void setLocation(LOCATION Location){
         this.location = Location;
+    }
+
+    public int getMonth(){ 
+        return month; 
+    }
+
+    public int getDate(){ 
+        return date;  
+    }
+
+    public int getStart(){ 
+        return start; 
+    }
+    
+    public int getEnd(){ 
+        return end;   
     }
 
     public LocalTime getStartTime(){

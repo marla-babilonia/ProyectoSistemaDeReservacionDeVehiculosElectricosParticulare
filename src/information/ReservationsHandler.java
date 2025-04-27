@@ -1,11 +1,14 @@
 package information;
 
 import information.AvailableStations.LOCATION;
+import HelpfulClasses.EnumsHandler;
 import HelpfulClasses.ScheduleHelper;
 import HelpfulClasses.TimeSlot;
+import information.WaitlistHandler;
 
 import CSVHandlers.CSVLoader;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -59,8 +62,25 @@ public class ReservationsHandler {
         List<Vehicles> available = checkAvailability(month, day, start, end);
         if (available.isEmpty()) {
             System.out.println("No vehicles available for that time slot.");
-            return;
+            System.out.print("Join the waitlist? (y/n): ");
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            List<AvailableStations> stations = CSVLoader.loadStations();
+            System.out.println("Which station do you want to wait for?");
+            for (int i = 0; i < stations.size(); i++) {
+                System.out.printf("%d) %s%n",
+                    i + 1,
+                    EnumsHandler.formatStationName(stations.get(i).getName())
+                );
+            }
+            int choice = Integer.parseInt(scanner.nextLine().trim());
+            AvailableStations.LOCATION station = stations.get(choice - 1).getName();
+            int entryNum = WaitlistHandler.nextNum();
+            Waitlist entry = new Waitlist(entryNum, user,null, station, month, day, start, end, 0);
+            WaitlistHandler.addWaitlistEntry(entry);
+            System.out.println("Added to waitlist as entry #" + entryNum);
         }
+    return;
+}
 
         Set<Vehicles.VEHICLE_TYPE> types = new HashSet<>();
         for (Vehicles v : available) types.add(v.getVehicleType());
