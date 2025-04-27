@@ -11,9 +11,9 @@ public class Reservations {
     private int date;     
     private int startTime; // Start and end time are in military time, so its easier to calculate duration
     private int endTime;   
-    private int creditCost;
+    private double creditCost;
 
-    public Reservations(Users student, Vehicles vehicle, LOCATION station, int month, int date, int startTime, int endTime, int creditCost) {
+    public Reservations(Users student, Vehicles vehicle, LOCATION station, int month, int date, int startTime, int endTime, double cost) {
         this.student = student;
         this.vehicle = vehicle;
         this.station = station;
@@ -21,7 +21,7 @@ public class Reservations {
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.creditCost = creditCost;
+        this.creditCost = cost;
     }
 
     //Getters
@@ -53,7 +53,7 @@ public class Reservations {
         return endTime;
     }
 
-    public int getCreditCost() {
+    public double getCreditCost() {
         return creditCost;
     }
 
@@ -86,7 +86,7 @@ public class Reservations {
         this.endTime = endTime;
     }
 
-    public void setCreditCost(int creditCost) {
+    public void setCreditCost(double creditCost) {
         this.creditCost = creditCost;
     }
 

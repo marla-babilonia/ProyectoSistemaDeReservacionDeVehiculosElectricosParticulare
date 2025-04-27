@@ -97,7 +97,7 @@ public class ReservationsHandler {
             return;
         }
 
-        int cost = calculateCost(duration);
+        double cost = calculateCost(duration, vehicle.getVehicleType());
         System.out.printf("Total credit cost: %d%n", cost);
 
         Users owner = vehicle.getOwner();
@@ -242,13 +242,18 @@ public class ReservationsHandler {
                 System.out.println("Selected vehicle is not available for the new time slot.");
                 return;
             }
+            Users oldOwner = selected.getVehicle().getOwner();
+            Users newOwner = newVehicle.getOwner();
 
-            int oldCost = selected.getCreditCost();
-            int newCost = calculateCost(duration);
+            double oldCost = selected.getCreditCost();
+            double newCost = calculateCost(duration, newVehicle.getVehicleType());
+
+            oldOwner.setCredits(oldOwner.getCredits() - oldCost);
+            newClient.setCredits(newClient.getCredits() + oldCost);
 
             Users owner = newVehicle.getOwner();
-            owner.setCredits(owner.getCredits() - oldCost + newCost);
-            newClient.setCredits(newClient.getCredits() + oldCost - newCost);
+            newOwner.setCredits(newOwner.getCredits() + newCost);
+            newClient.setCredits(newClient.getCredits() - newCost);
 
             selected.setMonth(newMonth);
             selected.setDate(newDay);
@@ -304,9 +309,26 @@ public class ReservationsHandler {
         return available;
     }
 
-    private static int calculateCost(int durationHours) {
-        return durationHours;
+    private static double calculateCost(int durationHours, Vehicles.VEHICLE_TYPE type) {
+        double cost = 0;
+    
+        switch (type) {
+            case BICYCLE:
+                cost = 3 + (durationHours - 1) * 2;
+                break;
+            case SKOOTER:
+                cost = 2 + (durationHours - 1) * 1;
+                break;
+            case SKATEBOARD:
+                cost = 1 + (durationHours - 1) * 0.5;
+                break;
+            default:
+                cost = durationHours;
+        }
+    
+        return cost;
     }
+    
 
     private static List<Reservations> getClientReservations(int clientId) {
         List<Reservations> result = new ArrayList<>();
