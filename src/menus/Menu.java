@@ -3,6 +3,7 @@ package menus;
 import information.ReservationsHandler;
 import information.UsersHandler;
 import information.VehiclesHandler;
+import information.WaitlistHandler;
 // import station.StationHandler;
 import java.util.Scanner;
 
@@ -167,11 +168,10 @@ public class Menu {
 
             switch (input) {
                 case "1":
-                    // StationHandler.showWaitlist();
+                    WaitlistHandler.showWaitlist();
                     break;
                 case "2":
-                    // StationHandler.removeFromWaitlist();
-                    //hay que crear lo de waitlist
+                    WaitlistHandler.removeWaitlistEntry();
                     break;
                 case "3":
                     managingWaitlist = false;

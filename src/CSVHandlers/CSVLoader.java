@@ -8,6 +8,7 @@ import information.Vehicles.VEHICLE_TYPE;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -277,5 +278,35 @@ public class CSVLoader {
         .filter(v -> v.getID() == id)
         .findFirst()
         .orElse(null);
+    }
+
+    public static List<Waitlist> loadWaitlists() {
+        List<Waitlist> waitlists = new ArrayList<>();
+    
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(CSVLoader.class.getResourceAsStream("/waitlist.csv")))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 7) {
+                    int waitlistNum = Integer.parseInt(parts[0]);
+                    int studentId   = Integer.parseInt(parts[1]);
+                    int vehicleId   = Integer.parseInt(parts[2]);
+                    LOCATION station= EnumsHandler.getLocation(parts[3]);
+                    LocalTime start = LocalTime.parse(parts[4]);
+                    LocalTime end   = LocalTime.parse(parts[5]);
+                    int credits     = Integer.parseInt(parts[6]);
+                    Users user       = findUserById(studentId);
+                    Vehicles vehicle = getVehicleById(vehicleId);
+                    if (user != null && vehicle != null) {
+                        waitlists.add(new Waitlist(waitlistNum, user, vehicle, station, start, end, credits));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        return waitlists;
     }
 }
