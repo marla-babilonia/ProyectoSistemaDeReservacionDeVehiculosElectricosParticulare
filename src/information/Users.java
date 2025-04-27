@@ -15,7 +15,7 @@ public class Users {
     int studentid;
     String studentname;
     String studentemail;
-    long studentphone;
+    String studentphone;
     int credits;
     int vehiclesOwned;
 
@@ -33,7 +33,7 @@ public class Users {
         OWNERANDCLIENT,
     }
 
-    public Users(String studentname, int studentid, String studentemail, long studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
+    public Users(String studentname, int studentid, String studentemail, String studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
@@ -74,11 +74,11 @@ public class Users {
         this.studentemail = studentemail;
     }
 
-    public long getstudentphone() {
+    public String getstudentphone() {
         return studentphone;
     }
 
-    public void setstudentphone(long studentphone) {
+    public void setstudentphone(String studentphone) {
         this.studentphone = studentphone;
     }
 
@@ -104,6 +104,11 @@ public class Users {
 
     public void setVehiclesOwned(int vehiclesOwned) {
         this.vehiclesOwned = vehiclesOwned; 
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Name: %s ID: %d  Email: %s  Phone: %s  Owner or Client?  %s  Credits: %d  VehiclesOwned: %d", studentname, studentid, studentemail, studentphone, userType, credits, vehiclesOwned);
     }
 
 

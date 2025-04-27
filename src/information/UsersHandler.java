@@ -52,7 +52,7 @@ public class UsersHandler {
             phoneStr = scanner.nextLine().trim();
         }
 
-        long phone = Integer.parseInt(phoneStr);
+        String phone = phoneStr;
         System.out.print("Select user type (1=OWNER, 2=CLIENT, 3=BOTH): ");
         int typeOpt;
         try {
@@ -107,7 +107,7 @@ public class UsersHandler {
         System.out.print("Enter new phone (10 digits or blank): ");
         String phone = scanner.nextLine().trim();
         if (!phone.isEmpty() && phone.matches("^\\d{10}$")) {
-            u.setstudentphone(Integer.parseInt(phone));
+            u.setstudentphone(phone);
         }
         System.out.print("Enter new credits (blank to skip): ");
         String cred = scanner.nextLine().trim();

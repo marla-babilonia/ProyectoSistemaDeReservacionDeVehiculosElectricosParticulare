@@ -93,11 +93,11 @@ public class ScheduleHelper {
     // and that minutes don;t exceed 60
     public static int askStartTimeAndValidate(Scanner scanner) {
         int start = -1;
-        while (start < 0 || start > 2359 || start % 100 >= 60) {
+        while (start < 700 || start > 1800 || start % 100 >= 60) {
             System.out.print("Enter start time in Military time: ");
             try {
                 start = Integer.parseInt(scanner.nextLine());
-                if (start < 0 || start > 2359 || start % 100 >= 60) {
+                if (start < 700 || start > 1800 || start % 100 >= 60) {
                     System.out.println("Time was not written properly. Try again.");
                 }
             } catch (NumberFormatException e) {
@@ -112,11 +112,11 @@ public class ScheduleHelper {
     public static int askEndTimeAndValidate(Scanner scanner, int startTime) {
 
         int end = -1;
-        while (end <= startTime || end > 2359 || end % 100 >= 60) {
+        while (end <= startTime || end > 1800 || end % 100 >= 60) {
             System.out.print("Enter start time in Military time: ");
             try {
                 end = Integer.parseInt(scanner.nextLine());
-                if (end <= startTime || end > 2359 || end % 100 >= 60) {
+                if (end <= startTime || end > 1800 || end % 100 >= 60) {
                     System.out.println("Time was not written properly or it's before the start time. Try again.");
                 }
             } catch (NumberFormatException e) {

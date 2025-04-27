@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -33,12 +34,16 @@ public class CSVLoader {
             String line;
             
             while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                if (line.startsWith("\uFEFF")) {
+                    line = line.substring(1); // Remove BOM character!
+                }
                 String[] parts = line.split(",");
                 if (parts.length == 7) {
                     String studentName = parts[0];
                     int studentID = Integer.parseInt(parts[1]);
                     String studentEmail = parts[2];
-                    int studentPhone = Integer.parseInt(parts[3]);
+                    String studentPhone = parts[3];
                     String ownerOrClientString = parts[4];
                     OWNER_OR_CLIENT ownerOrClient = null;
                     int credits = Integer.parseInt(parts[5]);
@@ -161,9 +166,6 @@ public class CSVLoader {
                 line = line.trim();
                 // 1) Skip blank lines
                 if (line.isEmpty()) continue;
-    
-                // 2) Log the raw line for debugging
-                System.out.println("DEBUG loadVehicles line: \"" + line + "\"");
     
                 String[] parts = line.split(",");
                 // 3) Must have at least 6 columns
