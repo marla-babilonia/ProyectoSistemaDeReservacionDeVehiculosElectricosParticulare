@@ -1,85 +1,93 @@
 package information;
 
-import java.time.LocalTime;
 import information.AvailableStations.LOCATION;
 
 public class Reservations {
-    private int reservationNum;
-    private Users user;
+    private Users student;
     private Vehicles vehicle;
-    private LOCATION pickupLocation;
-    private LOCATION dropoffLocation;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private int totalCredits;
+    private LOCATION station;
+    private int month;    
+    private int date;     
+    private int startTime; // Start and end time are in military time, so its easier to calculate duration
+    private int endTime;   
+    private int creditCost;
 
-    public Reservations(int reservationNum, Users user, Vehicles vehicle, LOCATION pickupLocation, LOCATION dropoffLocation, LocalTime startTime, LocalTime endTime, int totalCredits){
-        this.reservationNum = reservationNum;
-        this.user = user;
+    public Reservations(Users student, Vehicles vehicle, LOCATION station, int month, int date, int startTime, int endTime, int creditCost) {
+        this.student = student;
         this.vehicle = vehicle;
-        this.pickupLocation = pickupLocation;
-        this.dropoffLocation = dropoffLocation;
+        this.station = station;
+        this.month = month;
+        this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.totalCredits = totalCredits;
+        this.creditCost = creditCost;
     }
 
-    // Setters and Getters.
-
-    public int getReservationNum(){
-        return reservationNum;
-    }
-    public void setReservationNum(int ReservationNum){
-        this.reservationNum = ReservationNum;
+    //Getters
+    public Users getStudent() {
+        return student;
     }
 
-    public Users getUser(){
-        return user;
-    }
-    public void setUser(Users User){
-        this.user = User;
-    }
-
-    public Vehicles getVehicle(){
+    public Vehicles getVehicle() {
         return vehicle;
     }
-    public void setVehicle(Vehicles Vehicle){
-        this.vehicle = Vehicle;
+
+    public LOCATION getStation() {
+        return station;
     }
 
-    public LOCATION getPickupLocation(){
-        return pickupLocation;
-    }
-    public void setPickupLocation(LOCATION PickupLocation){
-        this.pickupLocation = PickupLocation;
+    public int getMonth() {
+        return month;
     }
 
-    public LOCATION getDropoffLocation(){
-        return dropoffLocation;
-    }
-    public void setDropoffLocation(LOCATION DropoffLocation){
-        this.dropoffLocation = DropoffLocation;
+    public int getDate() {
+        return date;
     }
 
-    public LocalTime getStartTime(){
+    public int getStartTime() {
         return startTime;
     }
-    public void setStartTime(LocalTime StartTime){
-        this.startTime = StartTime;
-    }
 
-    public LocalTime getEndTime(){
+    public int getEndTime() {
         return endTime;
     }
-    public void setEndTime(LocalTime EndTime){
-        this.endTime = EndTime;
+
+    public int getCreditCost() {
+        return creditCost;
     }
 
-    public int getTotalCredits(){
-        return totalCredits;
-    }
-    public void setTotaCredits(int TotalCredits){
-        this.totalCredits = TotalCredits;
+    //Setters
+    public void setStudent(Users student) {
+        this.student = student;
     }
 
+    public void setVehicle(Vehicles vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public void setStation(LOCATION station) {
+        this.station = station;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(int endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setCreditCost(int creditCost) {
+        this.creditCost = creditCost;
+    }
+
+    
 }
