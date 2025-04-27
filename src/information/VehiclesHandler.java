@@ -1,33 +1,15 @@
 package information;
-
-import java.util.HashSet;
+import information.AvailableStations.LOCATION;
+import information.Vehicles.VEHICLE_TYPE;
+import java.util.Scanner;
 import java.util.Set;
 
 public class VehiclesHandler {
-  protected HashSet<Vehicles> availableVehicles = new HashSet<>();
-    protected HashSet<Vehicles> allVehicles = new HashSet<>();
-  
-    // Agregar vehículos iniciales si están disponibles
-    public void AvailableVehicles(Set<Vehicles> allVehicles) {
-      for (Vehicles v : allVehicles) {
-          if (v.getavailable()) {
-              availableVehicles.add(v);
-          }
-      }
-  }
 
-  // Actualizar disponibilidad de un vehículo
-  public void updateAvailability(Vehicles vehicle) {
-      if (vehicle.getavailable()) {
-          availableVehicles.add(vehicle);
-      } else {
-          availableVehicles.remove(vehicle);
-      }
-  }
 
   // Buscar vehículo por ID
-  public Vehicles findById(int id) {
-      for (Vehicles v : availableVehicles) {
+  public Vehicles findById(int id, Set<Vehicles> list) {
+      for (Vehicles v : list) {
           if (v.getID() == id) {
               return v;
           }
@@ -35,30 +17,61 @@ public class VehiclesHandler {
       return null;
   }
 
-  // Editar vehículo (por ejemplo, cambiar tipo o descripción)
-  public boolean editVehicle(int id, Vehicles.VEHICLE_TYPE Type, String Description) {
-      Vehicles v = findById(id);
-      if (v != null) {
-          v.setVehicleType(Type);
-          v.setdescription(Description);
-          return true;
-      }
-      return false;
+  // Editar vehículo 
+  public void editVehicleDesc(int id, Set<Vehicles> list) {
+    Vehicles v = findById(id, list);
+    Scanner scan = new Scanner(System.in);
+    System.out.println("New Descripcion");
+    String descripción = scan.nextLine();
+    v.setdescription(descripción); 
+    System.out.println("New ID");
+    int newid = scan.nextInt();
+    v.setID(newid);
   }
 
   // Remover vehículo manualmente
-  public void removeVehicle(HashSet<Vehicles> availableVehicles, int id) {
-      Vehicles exists = findById(id);
+  public void removeVehicle(int id, Set<Vehicles> list) {
+      Vehicles exists = findById(id, list);
       if (exists != null) {
-          availableVehicles.remove(exists);
+          list.remove(exists);
       }
+  }
+  //anadir vehiculo
+  public void addVehicle(Set<Vehicles> list) {
+     Scanner scanner = new Scanner(System.in);
 
+        // Enter Vehicle ID
+        System.out.print("Enter vehicle ID: ");
+        int id = Integer.parseInt(scanner.nextLine().trim());
+
+        // Enter Vehicle Type
+        System.out.print("Enter vehicle type (SKOOTER, BICYCLE, SKATEBOARD): ");
+        String vehicleTypeStr = scanner.nextLine().trim().toUpperCase();
+        VEHICLE_TYPE vehicleType = VEHICLE_TYPE.valueOf(vehicleTypeStr);
+
+        // Enter Description
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine().trim();
+
+        // Enter Schedule
+        System.out.print("Enter schedule (0 for no schedule): ");
+        int schedule = Integer.parseInt(scanner.nextLine().trim());
+
+        // Enter Location
+        System.out.print("Enter location (EDIFICIO_STEFANI, CENTRO_DE_ESTUDIANTES, EDIFICIO_DE_BIOLOGIA, EDIFICIO_INGENIERIA_QUIMICA, EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS): ");
+        String locationStr = scanner.nextLine().trim().toUpperCase();
+        LOCATION location = EnumsHandler.getLocation(locationStr);
+
+        // Enter Availability
+        System.out.print("Enter availability (true or false): ");
+        boolean available = Boolean.parseBoolean(scanner.nextLine().trim());
+
+        // Create the vehicle
+        Vehicles newVehicle = new Vehicles(id, vehicleType, description, schedule, location, available);
+        //Stations.compleatvehicles.add(newVehicle);Cant add to stations not in the same package.
   }
 
-  // Obtener todos los vehículos disponibles
-  public Set<Vehicles> getAvailableVehicles() {
-      return availableVehicles;
-  }
+
 
   
   //metodo para crear set de available vehicles
