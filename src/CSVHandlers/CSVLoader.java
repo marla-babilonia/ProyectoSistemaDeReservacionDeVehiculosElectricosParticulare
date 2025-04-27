@@ -92,6 +92,7 @@ public class CSVLoader {
     }
 
     public static List<Vehicles> loadVehicles() {
+        
         List<Vehicles> vehicles = new ArrayList<>();
 
         try {

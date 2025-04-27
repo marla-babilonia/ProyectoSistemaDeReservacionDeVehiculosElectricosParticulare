@@ -59,6 +59,8 @@ public class VehiclesHandler {
   public Set<Vehicles> getAvailableVehicles() {
       return availableVehicles;
   }
+
+  
   //metodo para crear set de available vehicles
 // editar el set available method para que si es falso quitarlo de la lista y si es cierto anadirlo a la lista
 
