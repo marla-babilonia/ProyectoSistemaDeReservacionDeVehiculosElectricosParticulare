@@ -16,6 +16,9 @@ public class Users {
     String studentname;
     String studentemail;
     int studentphone;
+    int credits;
+    int vehiclesOwned;
+
     private OWNER_OR_CLIENT userType;
     public static List<Users> listaUsuarios = new ArrayList<>();
 
@@ -29,12 +32,14 @@ public class Users {
         OWNERANDCLIENT,
     }
 
-    public Users(String studentname, int studentid, String studentemail, int studentphone, OWNER_OR_CLIENT userType) {
+    public Users(String studentname, int studentid, String studentemail, int studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
         this.studentphone = studentphone;
         this.userType = userType;
+        this.credits = credits;
+        this.vehiclesOwned = vehiclesOwned;
         
     }
 
@@ -82,6 +87,22 @@ public class Users {
 
     public void setTipo(OWNER_OR_CLIENT userType) {
         this.userType = userType;
+    }
+
+    public int getCredits() { 
+        return credits; 
+    }
+
+    public void setCredits(int credits) { 
+        this.credits = credits; 
+    }
+
+    public int getVehiclesOwned() {
+        return vehiclesOwned; 
+    }
+
+    public void setVehiclesOwned(int vehiclesOwned) {
+        this.vehiclesOwned = vehiclesOwned; 
     }
 
 

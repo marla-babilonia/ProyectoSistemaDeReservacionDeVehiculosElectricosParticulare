@@ -1,9 +1,10 @@
+package CSVHandlers;
+import information.Users.OWNER_OR_CLIENT;
+import information.Vehicles.VEHICLE_TYPE;
 import information.AvailableStations;
 import information.EnumsHandler;
 import information.Users;
 import information.Vehicles;
-import information.Users.OWNER_OR_CLIENT;
-import information.Vehicles.VEHICLE_TYPE;
 import information.AvailableStations.LOCATION;
 
 import java.io.BufferedReader;
@@ -60,13 +61,15 @@ public class CSVLoader {
             
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 5) {
+                if (parts.length == 7) {
                     String studentName = parts[0];
                     int studentID = Integer.parseInt(parts[1]);
                     String studentEmail = parts[2];
                     int studentPhone = Integer.parseInt(parts[3]);
                     String ownerOrClientString = parts[4];
                     OWNER_OR_CLIENT ownerOrClient = null;
+                    int credits = Integer.parseInt(parts[5]);
+                    int vehiclesOwned = Integer.parseInt(parts[6]);
 
                     if (ownerOrClientString.equalsIgnoreCase("owner")){
                         ownerOrClient = OWNER_OR_CLIENT.OWNER;
@@ -76,7 +79,7 @@ public class CSVLoader {
                         ownerOrClient = OWNER_OR_CLIENT.OWNERANDCLIENT;
                     }
 
-                    users.add(new Users(studentName, studentID, studentEmail, studentPhone, ownerOrClient));
+                    users.add(new Users(studentName, studentID, studentEmail, studentPhone, ownerOrClient, credits, vehiclesOwned));
                 }
             }
 
