@@ -88,8 +88,8 @@ public class VehiclesHandler {
             System.out.println("Owner not found");
             return;
         }
-        if (VehiclesHandler.findByOwner(owner).size() >= 2) {
-            System.out.println("Owner already has 2 vehicles");
+        if (owner.getVehiclesOwned() >= 2) {
+            System.out.println("Owner already owns 2 vehicles!");
             return;
         }
 
@@ -105,7 +105,7 @@ public class VehiclesHandler {
         // Enter Vehicle Type
         VEHICLE_TYPE type = EnumsHandler.askVehicleTypeOption();
         if (type == null) {
-            System.out.println("No vehicle type found");
+            System.out.println("No vehicle type selected");
             return;
         }
 
@@ -150,6 +150,8 @@ public class VehiclesHandler {
         // Create the vehicle
         Vehicles newVehicle = new Vehicles(owner, newId, type, description, schedule, location, available);
         completeVehicles.add(newVehicle);
+        //increase the vehicle owned by one
+        owner.setVehiclesOwned(owner.getVehiclesOwned() + 1);
         System.out.println("Vehicle added");
   }
 
@@ -167,6 +169,7 @@ public class VehiclesHandler {
 
         if (vehicle != null) {
             completeVehicles.remove(vehicle);
+            vehicle.getOwner().setVehiclesOwned(vehicle.getOwner().getVehiclesOwned() - 1);
             System.out.println("SUCCESFULLY TERMINATED");
         } else {
             System.out.println("Vehicle not found");
@@ -183,6 +186,7 @@ public class VehiclesHandler {
                 System.out.println("No vehicles found");
             } else {
                 completeVehicles.removeAll(ownerVehicles);
+                owner.setVehiclesOwned(owner.getVehiclesOwned() - ownerVehicles.size());
                 System.out.println(ownerVehicles.size() + "TWAS REMOVED");
             }
 
@@ -191,6 +195,61 @@ public class VehiclesHandler {
         }
     }
   }
+
+  public static void modifyVehicle() {
+
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Let's Modify - Enter the Id: ");
+    int vehicleId = Integer.parseInt(scanner.nextLine().trim());
+
+    Vehicles v = getVehicleById(vehicleId);
+    if (v == null) {
+        System.out.println("No such thing exist");
+        return;
+    }
+
+    boolean editing = true;
+
+    while (editing) {
+        System.out.println("\nWhat do yo want to modify?:");
+        System.out.println("1. Description");
+        System.out.println("2. Location");
+        System.out.println("3. Vehicle Type");
+        System.out.println("4. Quit");
+        System.out.print("What will it be?  ");
+
+        int option = Integer.parseInt(scanner.nextLine().trim());
+
+        switch (option) {
+            case 1:
+                System.out.print("New Description: ");
+                v.setdescription(scanner.nextLine().trim());
+                System.out.println("Updated");
+                break;
+            case 2:
+                AvailableStations.LOCATION newLocation = HelpfulClasses.EnumsHandler.askLocationOption();
+                if (newLocation != null) {
+                    v.setLocation(newLocation.name());
+                    System.out.println("Updated");
+                }
+                break;
+            case 3:
+                Vehicles.VEHICLE_TYPE newType = HelpfulClasses.EnumsHandler.askVehicleTypeOption();
+                if (newType != null) {
+                    v.setVehicleType(newType);
+                    System.out.println("Updated");
+                }
+                break;
+            case 4:
+                editing = false;
+                System.out.println("Going back");
+                break;
+            default:
+                System.out.println("Not an option. Try again");
+        }
+    }
+}
+
 
   
 

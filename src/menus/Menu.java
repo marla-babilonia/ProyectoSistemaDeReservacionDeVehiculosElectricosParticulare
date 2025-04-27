@@ -143,7 +143,7 @@ public class Menu {
                     VehiclesHandler.removeVehicle();
                     break;
                 case "4":
-                    System.out.println("Modify vehicle no se ha hecho");
+                VehiclesHandler.modifyVehicle();
                     break;
                 case "5":
                     managingVehicles = false;
