@@ -1,11 +1,10 @@
 package CSVHandlers;
-import information.AvailableStations;
+
+import information.*;
 import information.AvailableStations.LOCATION;
-import information.EnumsHandler;
-import information.Users;
 import information.Users.OWNER_OR_CLIENT;
-import information.Vehicles;
 import information.Vehicles.VEHICLE_TYPE;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -136,22 +135,48 @@ public class CSVLoader {
         return vehicles;
     }
 
-    // private static LOCATION getLocation(String string) {
 
-    //     LOCATION location = null;
-
-    //     if (string.equalsIgnoreCase("edificio stefani")){
-    //         location = LOCATION.EDIFICIO_STEFANI;
-    //     } else if (string.equalsIgnoreCase("centro de estudiantes")){
-    //         location = LOCATION.CENTRO_DE_ESTUDIANTES;
-    //     } else if (string.equalsIgnoreCase("edificio de biologia")){
-    //         location = LOCATION.EDIFICIO_DE_BIOLOGIA;
-    //     } else if (string.equalsIgnoreCase("edificio de biologia")){
-    //         location = LOCATION.EDIFICIO_INGENIERIA_QUIMICA;
-    //     } else if (string.equalsIgnoreCase("edificio de biologia")){
-    //         location = LOCATION.EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS;
-    //     }
-
-    //     return location;
-    // }
+    public static List<Reservations> loadReservations(List<Users> usersList, List<Vehicles> vehiclesList) {
+        List<Reservations> reservations = new ArrayList<>();
+    
+        try {
+            InputStream inputStream = CSVLoader.class.getResourceAsStream("/reservations.csv");
+            if (inputStream == null) {
+                throw new RuntimeException("File not found: /reservations.csv");
+            }
+    
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+    
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 8) {
+                    int studentId = Integer.parseInt(parts[0]);
+                    int vehicleId = Integer.parseInt(parts[1]);
+                    LOCATION station = EnumsHandler.getLocation(parts[2]);
+                    int month = Integer.parseInt(parts[3]);
+                    int date = Integer.parseInt(parts[4]);
+                    int startTime = Integer.parseInt(parts[5]);
+                    int endTime = Integer.parseInt(parts[6]);
+                    int creditCost = Integer.parseInt(parts[7]);
+    
+                    Users student = UsersHandler.getUserById(studentId);
+                    Vehicles vehicle = VehiclesHandler.getVehicleById(vehicleId);
+    
+                    if (student != null && vehicle != null) {
+                        reservations.add(new Reservations(student, vehicle, station, month, date, startTime, endTime, creditCost));
+                    } else {
+                        System.out.println("Warning: Reservation skipped (User or Vehicle not found). StudentID: " + studentId + ", VehicleID: " + vehicleId);
+                    }
+                }
+            }
+    
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        return reservations;
+    }
+    
 }
