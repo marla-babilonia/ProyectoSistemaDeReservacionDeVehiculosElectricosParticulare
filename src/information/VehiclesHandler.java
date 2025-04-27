@@ -1,4 +1,5 @@
 package information;
+import CSVHandlers.CSVLoader;
 import information.AvailableStations.LOCATION;
 import information.Vehicles.VEHICLE_TYPE;
 import java.util.Scanner;
@@ -6,7 +7,7 @@ import java.util.Set;
 
 public class VehiclesHandler {
 
-
+    static Set<Vehicles> compleatvehicles = CSVLoader.loadVehicles();
   // Buscar vehículo por ID
   public Vehicles findById(int id, Set<Vehicles> list) {
       for (Vehicles v : list) {
@@ -68,7 +69,7 @@ public class VehiclesHandler {
 
         // Create the vehicle
         Vehicles newVehicle = new Vehicles(id, vehicleType, description, schedule, location, available);
-        //Stations.compleatvehicles.add(newVehicle);Cant add to stations not in the same package.
+        compleatvehicles.add(newVehicle);
   }
 
 
