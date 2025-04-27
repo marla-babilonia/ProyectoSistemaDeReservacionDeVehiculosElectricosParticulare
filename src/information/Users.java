@@ -16,7 +16,7 @@ public class Users {
     String studentname;
     String studentemail;
     String studentphone;
-    int credits;
+    double credits;
     int vehiclesOwned;
 
     private OWNER_OR_CLIENT userType;
@@ -33,7 +33,7 @@ public class Users {
         OWNERANDCLIENT,
     }
 
-    public Users(String studentname, int studentid, String studentemail, String studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
+    public Users(String studentname, int studentid, String studentemail, String studentphone, OWNER_OR_CLIENT userType, double credits, int vehiclesOwned) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
@@ -90,11 +90,11 @@ public class Users {
         this.userType = userType;
     }
 
-    public int getCredits() { 
+    public double getCredits() { 
         return credits; 
     }
 
-    public void setCredits(int credits) { 
+    public void setCredits(double credits) { 
         this.credits = credits; 
     }
 

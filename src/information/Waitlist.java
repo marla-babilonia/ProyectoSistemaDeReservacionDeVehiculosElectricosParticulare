@@ -10,10 +10,10 @@ public class Waitlist {
     private LOCATION location;
     private LocalTime startTime;
     private LocalTime endTime;
-    private int totalCredits;
+    private double totalCredits;
     private int month, date, start, end;
 
-    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION location, int month, int date, int start, int end, int totalCredits) {
+    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION location, int month, int date, int start, int end, double totalCredits) {
     this.waitlistNum = waitlistNum;
     this.user = user;
     this.vehicle = vehicle;
@@ -87,10 +87,10 @@ public class Waitlist {
         this.endTime = EndTime;
     }
 
-    public int getTotalCredits(){
+    public double getTotalCredits(){
         return totalCredits;
     }
-    public void setTotaCredits(int TotalCredits){
+    public void setTotaCredits(double TotalCredits){
         this.totalCredits = TotalCredits;
     }
 

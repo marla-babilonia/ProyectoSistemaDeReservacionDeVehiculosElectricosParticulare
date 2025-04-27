@@ -47,7 +47,7 @@ public class CSVLoader {
                     String studentPhone = parts[3];
                     String ownerOrClientString = parts[4];
                     OWNER_OR_CLIENT ownerOrClient = null;
-                    int credits = Integer.parseInt(parts[5]);
+                    double credits = Integer.parseInt(parts[5]);
                     int vehiclesOwned = Integer.parseInt(parts[6]);
 
                     if (ownerOrClientString.equalsIgnoreCase("owner")){
@@ -241,7 +241,7 @@ public class CSVLoader {
                     int date  = Integer.parseInt(parts[4]);
                     int start = Integer.parseInt(parts[5]);
                     int end   = Integer.parseInt(parts[6]);
-                    int cost  = Integer.parseInt(parts[7]);
+                    double cost  = Integer.parseInt(parts[7]);
 
                     Users student = findUserById(studentId);
                     Vehicles vehicle = getVehicleById(vehicleId);
@@ -291,7 +291,7 @@ public class CSVLoader {
                     int date  = Integer.parseInt(parts[5]);
                     int start = Integer.parseInt(parts[6]);
                     int end   = Integer.parseInt(parts[7]);
-                    int cost  = Integer.parseInt(parts[8]);
+                    double cost  = Double.parseDouble(parts[8]);
 
                     Users student = findUserById(studentId);
                     Vehicles vehicle = getVehicleById(vehicleId);
