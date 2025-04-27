@@ -16,15 +16,19 @@ public class WaitlistHandler {
     private static final Set<Vehicles> vehicles = VehiclesHandler.getVehicles();
     private static final List<Waitlist> waitlists = CSVLoader.loadWaitlists();
 
-    private static int nextNum() {
-        int max = 0;
-        for (Waitlist w : waitlists) {
-            if (w.getWaitlistNum() > max) {
-                max = w.getWaitlistNum();
-            }
-        }
-        return max + 1;
+    public static void addWaitlistEntry(Waitlist entry) {
+        waitlists.add(entry);
     }
+
+    public static int nextNum() {
+    int max = 0;
+    for (Waitlist w : waitlists) {
+        if (w.getWaitlistNum() > max) {
+            max = w.getWaitlistNum();
+        }
+    }
+    return max + 1;
+}
 
     /* Prints all waitlist entries. */
     public static void showWaitlist() {
