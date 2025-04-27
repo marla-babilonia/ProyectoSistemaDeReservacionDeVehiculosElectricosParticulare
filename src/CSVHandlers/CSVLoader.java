@@ -275,32 +275,34 @@ public class CSVLoader {
     }
 
     public static List<Waitlist> loadWaitlists() {
-        List<Waitlist> waitlists = new ArrayList<>();
+        List<Waitlist> waitlist = new ArrayList<>();
     
         try (BufferedReader reader = new BufferedReader(
                 new InputStreamReader(CSVLoader.class.getResourceAsStream("/waitlist.csv")))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 7) {
+                if (parts.length == 9) {
                     int waitlistNum = Integer.parseInt(parts[0]);
-                    int studentId   = Integer.parseInt(parts[1]);
-                    int vehicleId   = Integer.parseInt(parts[2]);
-                    LOCATION station= EnumsHandler.getLocation(parts[3]);
-                    LocalTime start = LocalTime.parse(parts[4]);
-                    LocalTime end   = LocalTime.parse(parts[5]);
-                    int credits     = Integer.parseInt(parts[6]);
-                    Users user       = findUserById(studentId);
+                    int studentId = Integer.parseInt(parts[1]);
+                    int vehicleId = Integer.parseInt(parts[2]);
+                    LOCATION station = EnumsHandler.getLocation(parts[3]);
+                    int month = Integer.parseInt(parts[4]);
+                    int date  = Integer.parseInt(parts[5]);
+                    int start = Integer.parseInt(parts[6]);
+                    int end   = Integer.parseInt(parts[7]);
+                    int cost  = Integer.parseInt(parts[8]);
+
+                    Users student = findUserById(studentId);
                     Vehicles vehicle = getVehicleById(vehicleId);
-                    if (user != null && vehicle != null) {
-                        waitlists.add(new Waitlist(waitlistNum, user, vehicle, station, start, end, credits));
+                    if (student != null && vehicle != null) {
+                        waitlist.add(new Waitlist(waitlistNum, student, vehicle, station, month, date, start, end, cost));
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
-        return waitlists;
+        return waitlist;
     }
 }
