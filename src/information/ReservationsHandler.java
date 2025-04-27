@@ -366,5 +366,9 @@ public class ReservationsHandler {
         }
     }
 
+    public static List<Reservations> getReservations() {
+        return reservations;
+    }
+
 }
 

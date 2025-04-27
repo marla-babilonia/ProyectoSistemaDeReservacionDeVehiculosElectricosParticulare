@@ -108,7 +108,7 @@ public class Users {
 
     @Override
     public String toString() {
-        return String.format("Name: %s ID: %d  Email: %s  Phone: %s  Owner or Client?  %s  Credits: %d  VehiclesOwned: %d", studentname, studentid, studentemail, studentphone, userType, credits, vehiclesOwned);
+        return String.format("Name: %s ID: %d  Email: %s  Phone: %s  Owner or Client?  %s  Credits: %.1f  VehiclesOwned: %d", studentname, studentid, studentemail, studentphone, userType, credits, vehiclesOwned);
     }
 
 
