@@ -134,7 +134,7 @@ public class Menu {
 
             switch (input) {
                 case "1":
-                    VehiclesHandler.showAllVehicles();
+                VehiclesHandler.getVehicles().forEach(System.out::println);
                     break;
                 case "2":
                     VehiclesHandler.addVehicle();
