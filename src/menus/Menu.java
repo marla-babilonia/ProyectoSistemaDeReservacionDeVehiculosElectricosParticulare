@@ -4,8 +4,13 @@ import information.ReservationsHandler;
 import information.UsersHandler;
 import information.VehiclesHandler;
 import information.WaitlistHandler;
+
+import java.io.IOException;
 // import station.StationHandler;
 import java.util.Scanner;
+
+import CSVHandlers.CSVLoader;
+import CSVHandlers.CSVUpdater;
 
 public class Menu {
     private static final Scanner scanner = new Scanner(System.in);
@@ -185,6 +190,14 @@ public class Menu {
     private static void quitProgram() {
         System.out.println("Saving changes...");
         
+        try {
+            CSVUpdater.saveUsers(UsersHandler.getUsers());
+            CSVUpdater.saveVehicles(VehiclesHandler.getVehicles());
+            CSVUpdater.saveReservations(CSVLoader.getReservations());
+            System.out.println("All data saved successfully.");
+        } catch (IOException e) {
+            System.err.println("Failed to save CSVs: " + e.getMessage());
+        }
         //falta salvar a los csv
 
         System.out.println("You're Welcome :)");
