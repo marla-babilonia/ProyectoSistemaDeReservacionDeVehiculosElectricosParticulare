@@ -9,6 +9,11 @@ public class Stations {
     //CREATES THE SETS
     Set<Vehicles> compleatvehicles = (Set<Vehicles>) CSVLoader.loadVehicles();
     Set<Integer> allVehicles = new HashSet<>();
+    Set<Vehicles> stefaniVehicles = new HashSet<>();
+    Set<Vehicles> centroEstudiantesVehicles = new HashSet<>();
+    Set<Vehicles> biologiaVehicles = new HashSet<>();
+    Set<Vehicles> quimicaVehicles = new HashSet<>();
+    Set<Vehicles> adminEmpresasVehicles = new HashSet<>();
     
     public Stations() {
 
@@ -16,35 +21,33 @@ public class Stations {
     }
     
     private void populateVehicles(){
-        Set<Vehicles> stefaniVehicles = new HashSet<>();
         for (Vehicles v : compleatvehicles) {
             if (v.getLocation() == LOCATION.EDIFICIO_STEFANI) {
                 stefaniVehicles.add(v);
             }
         }
-        Set<Vehicles> centroEstudiantesVehicles = new HashSet<>();
         for (Vehicles v : compleatvehicles) {
             if (v.getLocation() == LOCATION.CENTRO_DE_ESTUDIANTES) {
-                stefaniVehicles.add(v);
+                centroEstudiantesVehicles.add(v);
             }
         }
-        Set<Vehicles> biologiaVehicles = new HashSet<>();
         for (Vehicles v : compleatvehicles) {
             if (v.getLocation() == LOCATION.EDIFICIO_DE_BIOLOGIA) {
-                stefaniVehicles.add(v);
+                biologiaVehicles.add(v);
             }
         }
-        Set<Vehicles> quimicaVehicles = new HashSet<>();
         for (Vehicles v : compleatvehicles) {
             if (v.getLocation() == LOCATION.EDIFICIO_INGENIERIA_QUIMICA) {
-                stefaniVehicles.add(v);
+                quimicaVehicles.add(v);
             }
         }
-        Set<Vehicles> adminEmpresasVehicles = new HashSet<>();
         for (Vehicles v : compleatvehicles) {
             if (v.getLocation() == LOCATION.EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS) {
-                stefaniVehicles.add(v);
+                adminEmpresasVehicles.add(v);
             }
+        }
+        for (Vehicles v : compleatvehicles){
+            allVehicles.add(v.getID());
         }
     }
 
