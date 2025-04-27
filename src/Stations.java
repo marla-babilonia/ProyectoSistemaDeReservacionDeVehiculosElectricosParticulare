@@ -1,5 +1,4 @@
 import CSVHandlers.CSVLoader;
-import information.AvailableStations.LOCATION;
 import information.Vehicles;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,31 +21,25 @@ public class Stations {
     
     private void populateVehicles(){
         for (Vehicles v : compleatvehicles) {
-            if (v.getLocation() == LOCATION.EDIFICIO_STEFANI) {
-                stefaniVehicles.add(v);
+            switch (v.getLocation()) {
+                case EDIFICIO_STEFANI:
+                    stefaniVehicles.add(v);
+                    break;
+                case CENTRO_DE_ESTUDIANTES:
+                    centroEstudiantesVehicles.add(v);
+                    break;
+                case EDIFICIO_DE_BIOLOGIA:
+                    biologiaVehicles.add(v);
+                    break;
+                case EDIFICIO_INGENIERIA_QUIMICA:
+                    quimicaVehicles.add(v);
+                    break;
+                case EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS:
+                    adminEmpresasVehicles.add(v);
+                    break;
+                default:
+                    break;
             }
-        }
-        for (Vehicles v : compleatvehicles) {
-            if (v.getLocation() == LOCATION.CENTRO_DE_ESTUDIANTES) {
-                centroEstudiantesVehicles.add(v);
-            }
-        }
-        for (Vehicles v : compleatvehicles) {
-            if (v.getLocation() == LOCATION.EDIFICIO_DE_BIOLOGIA) {
-                biologiaVehicles.add(v);
-            }
-        }
-        for (Vehicles v : compleatvehicles) {
-            if (v.getLocation() == LOCATION.EDIFICIO_INGENIERIA_QUIMICA) {
-                quimicaVehicles.add(v);
-            }
-        }
-        for (Vehicles v : compleatvehicles) {
-            if (v.getLocation() == LOCATION.EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS) {
-                adminEmpresasVehicles.add(v);
-            }
-        }
-        for (Vehicles v : compleatvehicles){
             allVehicles.add(v.getID());
         }
     }
