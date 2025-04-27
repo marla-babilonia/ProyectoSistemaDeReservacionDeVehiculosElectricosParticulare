@@ -43,6 +43,23 @@ public class Users {
         
     }
 
+    static void populateUsers() {
+        listaUsuarios.add(new Users("John Doe", 1001, "john.doe@university.edu", 8011, OWNER_OR_CLIENT.CLIENT));
+        listaUsuarios.add(new Users("Jane Smith", 1002, "jane.smith@university.edu", 8012, OWNER_OR_CLIENT.OWNER));
+        listaUsuarios.add(new Users("Robert Johnson", 1003, "robert.j@university.edu", 8013, OWNER_OR_CLIENT.OWNERANDCLIENT));
+        listaUsuarios.add(new Users("Emily Davis", 1004, "emily.d@university.edu", 8014, OWNER_OR_CLIENT.CLIENT));
+        listaUsuarios.add(new Users("Michael Wilson", 1005, "michael.w@university.edu", 8015, OWNER_OR_CLIENT.OWNER));
+        listaUsuarios.add(new Users("Sarah Brown", 1006, "sarah.b@university.edu", 8016, OWNER_OR_CLIENT.CLIENT));
+        listaUsuarios.add(new Users("David Miller", 1007, "david.m@university.edu", 8017, OWNER_OR_CLIENT.OWNERANDCLIENT));
+        listaUsuarios.add(new Users("Jennifer Lee", 1008, "jennifer.l@university.edu", 8018, OWNER_OR_CLIENT.CLIENT));
+        listaUsuarios.add(new Users("Christopher Garcia", 1009, "chris.g@university.edu", 8019, OWNER_OR_CLIENT.OWNER));
+        listaUsuarios.add(new Users("Amanda Taylor", 1010, "amanda.t@university.edu", 80110, OWNER_OR_CLIENT.CLIENT));
+        listaUsuarios.add(new Users("Admin User", 1011, "admin@university.edu", 80111, OWNER_OR_CLIENT.OWNER));
+        listaUsuarios.add(new Users("Operator User", 1012, "operator@university.edu", 80113, OWNER_OR_CLIENT.OWNERANDCLIENT));
+    }
+//add users to arrary 
+
+    
     // Setters and Getters.
 
     public static List<Users> getListaUsuarios() {
