@@ -1,5 +1,9 @@
 package information;
 
+import java.util.Map;
+import java.util.Set;
+
+import HelpfulClasses.EnumsHandler;
 import information.AvailableStations.LOCATION;
 
 /* 
@@ -9,10 +13,12 @@ import information.AvailableStations.LOCATION;
  */
 
 public class Vehicles {
+    Users owner; //owner is an object (has all the owner information)
     int id;
-    private VEHICLE_TYPE vehicleType;
+    VEHICLE_TYPE vehicleType;
     String description;
-    int schedule;
+    Map<Integer, Map<Integer, Set<Integer>>> schedule; //Schedule is stored in a map by month (as key)
+                                            // and a value of (key date : value set of times)
     LOCATION location;
     Boolean available;
 
@@ -22,7 +28,8 @@ public class Vehicles {
         SKATEBOARD,
     }
 
-    public Vehicles(int id, VEHICLE_TYPE vehicleType, String description, int schedule, LOCATION location, Boolean available) {
+    public Vehicles(Users owner, int id, VEHICLE_TYPE vehicleType, String description, Map<Integer, Map<Integer, Set<Integer>>> schedule, LOCATION location, Boolean available) {
+        this.owner = owner;
         this.id = id;
         this.vehicleType = vehicleType;
         this.description = description;
@@ -31,7 +38,15 @@ public class Vehicles {
         this.available = available;
     }
 
-    // Setters and Getters.
+    // Setters and Getters
+
+    public Users getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Users owner) {
+        this.owner = owner;
+    }
 
     public int getID() {
         return id;
@@ -57,11 +72,11 @@ public class Vehicles {
         this.description = description;
     }
 
-    public int getschedule() {
+    public Map<Integer, Map<Integer, Set<Integer>>> getSchedule() {
         return schedule;
     }
 
-    public void setschedule(int schedule) {
+    public void setSchedule(Map<Integer, Map<Integer, Set<Integer>>> schedule) {
         this.schedule = schedule;
     }
 
@@ -80,9 +95,20 @@ public class Vehicles {
     public void setavailable(Boolean available) {
         this.available = available;
     }
+
+    //change the to string method to make it easier to print
+    
+    @Override
+    public String toString() {
+        return String.format(
+            "Vehicle[ID = %d, Owner ID = %d, It's a: %s, It's in: %s, Available? %b, Description = %s]",
+            id,
+            owner.getstudentid(),
+            vehicleType.name(),
+            EnumsHandler.formatStationName(location),
+            available,
+            description
+        );
+    }
 }
 
-//metodo para crear set de available vehicles
-// editar el set available method para que si es falso quitarlo de la lista y si es cierto anadirlo a la lista
-
-//para marla - buscar manera de editar, remover, y almacenar los vehiculos respondientes
