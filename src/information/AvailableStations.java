@@ -36,4 +36,15 @@ public class AvailableStations {
         this.currentCapacity = currentCapacity;
     }
 
+    public void increaseCurrentCapacity() {
+        this.currentCapacity++;
+    }
+
+    public void decreaseCurrentCapacity() {
+        if (this.currentCapacity > 0) {
+            this.currentCapacity--;
+        }
+    }
+
+    
 }

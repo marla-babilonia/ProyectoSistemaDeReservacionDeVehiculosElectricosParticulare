@@ -141,6 +141,12 @@ public class VehiclesHandler {
             return;
         }
 
+        AvailableStations station = AvailableStationsHandler.getStationByLocation(location);
+        if (station == null) {
+        System.out.println("Station not found.");
+            return;
+        }
+
         // Enter Availability
         boolean available = !schedule.isEmpty();
 
@@ -152,6 +158,7 @@ public class VehiclesHandler {
         completeVehicles.add(newVehicle);
         //increase the vehicle owned by one
         owner.setVehiclesOwned(owner.getVehiclesOwned() + 1);
+        station.increaseCurrentCapacity();
         System.out.println("Vehicle added");
   }
 
@@ -168,6 +175,10 @@ public class VehiclesHandler {
         Vehicles vehicle = getVehicleById(id);
 
         if (vehicle != null) {
+            AvailableStations station = AvailableStationsHandler.getStationByLocation(vehicle.getLocation());
+                if (station != null) {
+                    station.decreaseCurrentCapacity();  // 🚀
+                }
             completeVehicles.remove(vehicle);
             vehicle.getOwner().setVehiclesOwned(vehicle.getOwner().getVehiclesOwned() - 1);
             System.out.println("SUCCESFULLY TERMINATED");
@@ -185,8 +196,16 @@ public class VehiclesHandler {
             if (ownerVehicles.isEmpty()) {
                 System.out.println("No vehicles found");
             } else {
+                for (Vehicles v : ownerVehicles) {
+                    AvailableStations station = AvailableStationsHandler.getStationByLocation(v.getLocation());
+                    if (station != null) {
+                        station.decreaseCurrentCapacity();
+                    }
+                    owner.setVehiclesOwned(owner.getVehiclesOwned() - 1);
+                }
+            
+
                 completeVehicles.removeAll(ownerVehicles);
-                owner.setVehiclesOwned(owner.getVehiclesOwned() - ownerVehicles.size());
                 System.out.println(ownerVehicles.size() + "TWAS REMOVED");
             }
 
