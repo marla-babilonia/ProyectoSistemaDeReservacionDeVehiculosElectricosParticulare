@@ -72,11 +72,14 @@ public class VehiclesHandler {
         compleatvehicles.add(newVehicle);
   }
 
+  public static Vehicles getVehicleById(int id) {
+    return compleatvehicles.stream()
+        .filter(v -> v.getID() == id)
+        .findFirst()
+        .orElse(null);
+    }
 
 
-  
-  //metodo para crear set de available vehicles
-// editar el set available method para que si es falso quitarlo de la lista y si es cierto anadirlo a la lista
 
-//para marla - buscar manera de editar, remover, y almacenar los vehiculos respondientes  
+
 }

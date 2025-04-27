@@ -117,6 +117,13 @@ public class UsersHandler {
         System.out.println("User updated.");
     }
 
+    public static Users getUserById(int id) {
+        return users.stream()
+            .filter(u -> u.getstudentid() == id)
+            .findFirst()
+            .orElse(null);
+    }
+
 
     public static void findById(int id) {
         List<Users> found = users.stream()

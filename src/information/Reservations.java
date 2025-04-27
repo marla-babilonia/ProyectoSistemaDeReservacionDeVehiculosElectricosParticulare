@@ -89,5 +89,21 @@ public class Reservations {
         this.creditCost = creditCost;
     }
 
+    @Override
+    public String toString() {
+        return String.format(
+            "Reservation[Student ID=%d, Vehicle ID=%d, Station=%s, Date=%02d/%02d, Start=%04d, End=%04d, Credits=%d]",
+            student.getstudentid(),
+            vehicle.getID(),
+            EnumsHandler.formatStationName(station),
+            month,
+            date,
+            startTime,
+            endTime,
+            creditCost
+        );
+    }
+
+
     
 }
