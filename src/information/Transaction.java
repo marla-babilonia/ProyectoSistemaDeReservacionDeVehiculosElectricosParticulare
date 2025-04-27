@@ -43,7 +43,7 @@ public class Transaction {
         return vehicle;
     }
 
-    public int getCreditAmount() {
+    public double getCreditAmount() {
         return creditAmount;
     }
 
