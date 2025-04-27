@@ -8,18 +8,18 @@ public class Transaction {
     private Users client;
     private Users owner;
     private Vehicles vehicle;
-    private int creditAmount;
+    private double creditAmount;
     private int month;
     private int day;
     private int startTime;
     private int endTime;
 
-    public Transaction(Users client, Users owner, Vehicles vehicle, int creditAmount, int month, int day, int startTime, int endTime) {
+    public Transaction(Users client, Users owner, Vehicles vehicle, double cost, int month, int day, int startTime, int endTime) {
         this.transactionId = nextTransactionId++;
         this.client = client;
         this.owner = owner;
         this.vehicle = vehicle;
-        this.creditAmount = creditAmount;
+        this.creditAmount = cost;
         this.month = month;
         this.day = day;
         this.startTime = startTime;
@@ -43,7 +43,7 @@ public class Transaction {
         return vehicle;
     }
 
-    public int getCreditAmount() {
+    public double getCreditAmount() {
         return creditAmount;
     }
 
@@ -63,12 +63,11 @@ public class Transaction {
         return endTime;
     }
     public String toString() {
-        return String.format("Transaction ID: %d | Client: %s | Owner: %s | Vehicle: %s | Credits: %d | Date: %02d/%02d | Time: %02d:00-%02d:00",
+        return String.format("Transaction ID: %d | Client: %s | Owner: %s | Vehicle: %s | Credits: " + creditAmount, "| Date: %02d/%02d | Time: %02d:00-%02d:00",
                 transactionId,
                 client.getstudentid(),
                 owner.getstudentid(),
                 vehicle.getID(),
-                creditAmount,
                 month,
                 day,
                 startTime,
