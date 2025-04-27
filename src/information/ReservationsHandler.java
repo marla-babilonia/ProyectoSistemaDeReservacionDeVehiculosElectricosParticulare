@@ -1,14 +1,9 @@
 package information;
 
-import information.AvailableStations.LOCATION;
+import CSVHandlers.CSVLoader;
 import HelpfulClasses.EnumsHandler;
 import HelpfulClasses.ScheduleHelper;
 import HelpfulClasses.TimeSlot;
-import information.WaitlistHandler;
-
-import CSVHandlers.CSVLoader;
-
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -127,6 +122,11 @@ public class ReservationsHandler {
         Reservations reservation = new Reservations(user, vehicle, vehicle.getLocation(), month, day, start, end, cost);
         reservations.add(reservation);
         System.out.println("Reservation confirmed:\n" + reservation);
+
+        //this creates a transaction and records it at the same time,
+        Transaction transaction = new Transaction(user, owner, vehicle, cost, month, day, start, end);
+        TransactionsHandler.addTransaction(transaction);
+        System.out.println("Transaction recorded.");
 
     }
 
