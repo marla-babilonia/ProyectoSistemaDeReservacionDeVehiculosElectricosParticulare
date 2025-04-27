@@ -7,9 +7,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Stations stations = new Stations();
+        stations.populateVehicles();
         Scanner scan = new Scanner(System.in);
         LocalTime hours = LocalTime.now();
         System.out.println("Welcome back OPERATOR.");
+        System.out.println("Loaded vehicles: " + Stations.compleatvehicles.size());
         //TODO add posible errors (what if its is not a number, or a diferent number aka not 1,2 or 3)
         
         int option = 0; 

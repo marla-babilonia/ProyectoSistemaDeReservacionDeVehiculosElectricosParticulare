@@ -1,4 +1,3 @@
-id,vehicleType,description,schedule,location,available
 1,BICYCLE,Mountain Bike,0,EDIFICIO_STEFANI,true
 2,SKOOTER,Electric Scooter,0,EDIFICIO_STEFANI,true
 3,SKATEBOARD,Skateboard,0,EDIFICIO_STEFANI,false

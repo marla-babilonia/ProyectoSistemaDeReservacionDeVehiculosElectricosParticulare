@@ -6,7 +6,8 @@ import java.util.Set;
 public class Stations {
     
     //CREATES THE SETS
-    Set<Vehicles> compleatvehicles = (Set<Vehicles>) CSVLoader.loadVehicles();
+    static Set<Vehicles> compleatvehicles = CSVLoader.loadVehicles();
+    
     Set<Integer> allVehicles = new HashSet<>();
     Set<Vehicles> stefaniVehicles = new HashSet<>();
     Set<Vehicles> centroEstudiantesVehicles = new HashSet<>();
@@ -19,7 +20,7 @@ public class Stations {
         populateVehicles();
     }
     
-    private void populateVehicles(){
+    public void populateVehicles(){
         for (Vehicles v : compleatvehicles) {
             switch (v.getLocation()) {
                 case EDIFICIO_STEFANI:
