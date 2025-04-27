@@ -7,18 +7,16 @@ public class Waitlist {
     private int waitlistNum;
     private Users user;
     private Vehicles vehicle;
-    private LOCATION pickupLocation;
-    private LOCATION dropoffLocation;
+    private LOCATION location;
     private LocalTime startTime;
     private LocalTime endTime;
     private int totalCredits;
 
-    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION pickupLocation, LOCATION dropoffLocation, LocalTime startTime, LocalTime endTime, int totalCredits){
+    public Waitlist(int waitlistNum, Users user, Vehicles vehicle, LOCATION location, LocalTime startTime, LocalTime endTime, int totalCredits){
         this.waitlistNum = waitlistNum;
         this.user = user;
         this.vehicle = vehicle;
-        this.pickupLocation = pickupLocation;
-        this.dropoffLocation = dropoffLocation;
+        this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.totalCredits = totalCredits;
@@ -47,18 +45,11 @@ public class Waitlist {
         this.vehicle = Vehicle;
     }
 
-    public LOCATION getPickupLocation(){
-        return pickupLocation;
+    public LOCATION getLocation(){
+        return location;
     }
-    public void setPickupLocation(LOCATION PickupLocation){
-        this.pickupLocation = PickupLocation;
-    }
-
-    public LOCATION getDropoffLocation(){
-        return dropoffLocation;
-    }
-    public void setDropoffLocation(LOCATION DropoffLocation){
-        this.dropoffLocation = DropoffLocation;
+    public void setLocation(LOCATION Location){
+        this.location = Location;
     }
 
     public LocalTime getStartTime(){
