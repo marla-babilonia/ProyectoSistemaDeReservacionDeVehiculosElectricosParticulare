@@ -15,7 +15,7 @@ public class Users {
     int studentid;
     String studentname;
     String studentemail;
-    int studentphone;
+    long studentphone;
     int credits;
     int vehiclesOwned;
 
@@ -33,7 +33,7 @@ public class Users {
         OWNERANDCLIENT,
     }
 
-    public Users(String studentname, int studentid, String studentemail, int studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
+    public Users(String studentname, int studentid, String studentemail, long studentphone, OWNER_OR_CLIENT userType, int credits, int vehiclesOwned) {
         this.studentname = studentname;
         this.studentid = studentid;
         this.studentemail = studentemail;
@@ -74,11 +74,11 @@ public class Users {
         this.studentemail = studentemail;
     }
 
-    public int getstudentphone() {
+    public long getstudentphone() {
         return studentphone;
     }
 
-    public void setstudentphone(int studentphone) {
+    public void setstudentphone(long studentphone) {
         this.studentphone = studentphone;
     }
 

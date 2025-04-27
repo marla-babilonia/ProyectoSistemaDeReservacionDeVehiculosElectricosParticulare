@@ -12,39 +12,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+
+import HelpfulClasses.EnumsHandler;
+import HelpfulClasses.ScheduleHelper;
+import HelpfulClasses.TimeSlot;
 
 public class CSVLoader {
-
-    public static List<AvailableStations> loadStations() {
-        List<AvailableStations> stations = new ArrayList<>();
-
-        try {
-            InputStream inputStream = CSVLoader.class.getResourceAsStream("/stations.csv");
-            if (inputStream == null) {
-                throw new RuntimeException("File not found: /stations.csv");
-            }
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    LOCATION location = EnumsHandler.getLocation(parts[0]);
-                    int maxCapacity = Integer.parseInt(parts[1]);
-                    int currentCapacity = Integer.parseInt(parts[2]);
-
-                    stations.add(new AvailableStations(location, maxCapacity, currentCapacity));
-                }
-            }
-
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return stations;
-    }
 
     public static List<Users> loadUsers() {
         List<Users> users = new ArrayList<>();
@@ -90,14 +64,13 @@ public class CSVLoader {
         return users;
     }
 
-    public static Set<Vehicles> loadVehicles() {
-        
-        Set<Vehicles> vehicles = new HashSet<>();
+    public static List<AvailableStations> loadStations() {
+        List<AvailableStations> stations = new ArrayList<>();
 
         try {
-            InputStream inputStream = CSVLoader.class.getResourceAsStream("/vehicles.csv");
+            InputStream inputStream = CSVLoader.class.getResourceAsStream("/stations.csv");
             if (inputStream == null) {
-                throw new RuntimeException("File not found: /users.csv");
+                throw new RuntimeException("File not found: /stations.csv");
             }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -105,25 +78,12 @@ public class CSVLoader {
             
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 6) {
-                    int vehicleID = Integer.parseInt(parts[0]);
-                    String vehicleTypeString = parts[1];
-                    String description = parts[2];
-                    int schedule = Integer.parseInt(parts[3]);
-                    LOCATION location = EnumsHandler.getLocation(parts[4]);
-                    Boolean available = Boolean.parseBoolean(parts[5]);
+                if (parts.length == 3) {
+                    LOCATION location = EnumsHandler.getLocation(parts[0]);
+                    int maxCapacity = Integer.parseInt(parts[1]);
+                    int currentCapacity = Integer.parseInt(parts[2]);
 
-                    VEHICLE_TYPE vehicleType = null;
-
-                    if (vehicleTypeString.equalsIgnoreCase("skooter")){
-                        vehicleType = VEHICLE_TYPE.SKOOTER;
-                    } else if (vehicleTypeString.equalsIgnoreCase("skateboard")){
-                        vehicleType = VEHICLE_TYPE.SKATEBOARD;
-                    } else if (vehicleTypeString.equalsIgnoreCase("bicycle")){
-                        vehicleType = VEHICLE_TYPE.BICYCLE;
-                    }
-
-                    vehicles.add(new Vehicles(vehicleID, vehicleType, description, schedule, location, available));
+                    stations.add(new AvailableStations(location, maxCapacity, currentCapacity));
                 }
             }
 
@@ -132,22 +92,148 @@ public class CSVLoader {
             e.printStackTrace();
         }
 
-        return vehicles;
+        return stations;
     }
 
+    
 
-    public static List<Reservations> loadReservations(List<Users> usersList, List<Vehicles> vehiclesList) {
-        List<Reservations> reservations = new ArrayList<>();
+    // public static Set<Vehicles> loadVehicles() {
+    //     Set<Vehicles> vehicles = new HashSet<>();
+
+    //     try {
+    //         InputStream inputStream = CSVLoader.class.getResourceAsStream("/vehicles.csv");
+    //         if (inputStream == null) {
+    //             throw new RuntimeException("File not found: /vehicles.csv");
+    //         }
+
+    //         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+    //         String line;
+
+    //         while ((line = reader.readLine()) != null) {
+    //             if(line.trim().isEmpty()){
+    //                 continue;
+    //             }
+    //             String[] parts = line.split(",");
+    //             if (parts.length >= 6) {
+    //                 int ownerId = Integer.parseInt(parts[0]);
+    //                 int vehicleID = Integer.parseInt(parts[1]);
+    //                 VEHICLE_TYPE vehicleType = VEHICLE_TYPE.valueOf(parts[2].toUpperCase());
+    //                 String description = parts[3];
+    //                 LOCATION location = EnumsHandler.getLocation(parts[4]);
+    //                 boolean available = Boolean.parseBoolean(parts[5]);
+
+    //                 // Find owner
+    //                 Users owner = findUserById(ownerId);
+    //                 if (owner == null) {
+    //                     System.out.println("ID " + ownerId + " not found");
+    //                     continue;
+    //                 }
+
+    //                 // Create empty schedule (basic for now — schedule expansion possible)
+    //                 Map<Integer, Map<Integer, Set<TimeSlot>>> schedule = ScheduleHelper.createEmptySchedule();
+
+    //                 Vehicles vehicle = new Vehicles(owner, vehicleID, vehicleType, description, schedule, location, available);
+    //                 vehicles.add(vehicle);
+    //             }
+    //         }
+
+    //         reader.close();
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+
+    //     return vehicles;
+    // }
+
+    public static Set<Vehicles> loadVehicles() {
+        Set<Vehicles> vehicles = new HashSet<>();
     
         try {
-            InputStream inputStream = CSVLoader.class.getResourceAsStream("/reservations.csv");
+            InputStream inputStream = CSVLoader.class.getResourceAsStream("/vehicles.csv");
             if (inputStream == null) {
-                throw new RuntimeException("File not found: /reservations.csv");
+                throw new RuntimeException("File not found: /vehicles.csv");
             }
     
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
     
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+                // 1) Skip blank lines
+                if (line.isEmpty()) continue;
+    
+                // 2) Log the raw line for debugging
+                System.out.println("DEBUG loadVehicles line: \"" + line + "\"");
+    
+                String[] parts = line.split(",");
+                // 3) Must have at least 6 columns
+                if (parts.length < 6) {
+                    System.out.println("  → skipping: not enough columns");
+                    continue;
+                }
+    
+                String ownerIdStr   = parts[0].trim();
+                String vehicleIdStr = parts[1].trim();
+    
+                // 4) Validate that ownerId and vehicleId are numeric
+                if (!ownerIdStr.matches("\\d+") || !vehicleIdStr.matches("\\d+")) {
+                    System.out.println("  → skipping: non-numeric IDs: ownerId=\"" 
+                                       + ownerIdStr + "\", vehicleId=\"" + vehicleIdStr + "\"");
+                    continue;
+                }
+    
+                // 5) Now safe to parse
+                int ownerId   = Integer.parseInt(ownerIdStr);
+                int vehicleID = Integer.parseInt(vehicleIdStr);
+    
+                // 6) Parse the enum type (will throw if invalid)
+                VEHICLE_TYPE vehicleType;
+                try {
+                    vehicleType = VEHICLE_TYPE.valueOf(parts[2].trim().toUpperCase());
+                } catch (IllegalArgumentException iae) {
+                    System.out.println("  → skipping: invalid VEHICLE_TYPE: " + parts[2]);
+                    continue;
+                }
+    
+                String description = parts[3].trim();
+                LOCATION location  = EnumsHandler.getLocation(parts[4].trim());
+                boolean available  = Boolean.parseBoolean(parts[5].trim());
+    
+                // 7) Find owner object
+                Users owner = findUserById(ownerId);
+                if (owner == null) {
+                    System.out.println("  → skipping: owner ID not found: " + ownerId);
+                    continue;
+                }
+    
+                // 8) Build schedule (empty for now)
+                Map<Integer, Map<Integer, Set<TimeSlot>>> schedule =
+                    ScheduleHelper.createEmptySchedule();
+    
+                // 9) Finally, create and add
+                Vehicles v = new Vehicles(owner, vehicleID, vehicleType, description, schedule, location, available);
+                vehicles.add(v);
+            }
+    
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        return vehicles;
+    }
+
+    private static final List<Users> users = loadUsers();
+    private static final Set<Vehicles> vehicles = new HashSet<>(loadVehicles());
+    private static final List<Reservations> reservations = loadReservations();
+
+
+    public static List<Reservations> loadReservations() {
+        List<Reservations> reservations = new ArrayList<>();
+    
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(CSVLoader.class.getResourceAsStream("/reservations.csv")))) {
+            String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 8) {
@@ -155,28 +241,39 @@ public class CSVLoader {
                     int vehicleId = Integer.parseInt(parts[1]);
                     LOCATION station = EnumsHandler.getLocation(parts[2]);
                     int month = Integer.parseInt(parts[3]);
-                    int date = Integer.parseInt(parts[4]);
-                    int startTime = Integer.parseInt(parts[5]);
-                    int endTime = Integer.parseInt(parts[6]);
-                    int creditCost = Integer.parseInt(parts[7]);
-    
-                    Users student = UsersHandler.getUserById(studentId);
-                    Vehicles vehicle = VehiclesHandler.getVehicleById(vehicleId);
-    
+                    int date  = Integer.parseInt(parts[4]);
+                    int start = Integer.parseInt(parts[5]);
+                    int end   = Integer.parseInt(parts[6]);
+                    int cost  = Integer.parseInt(parts[7]);
+
+                    Users student = findUserById(studentId);
+                    Vehicles vehicle = getVehicleById(vehicleId);
                     if (student != null && vehicle != null) {
-                        reservations.add(new Reservations(student, vehicle, station, month, date, startTime, endTime, creditCost));
-                    } else {
-                        System.out.println("Warning: Reservation skipped (User or Vehicle not found). StudentID: " + studentId + ", VehicleID: " + vehicleId);
+                        reservations.add(new Reservations(student, vehicle, station, month, date, start, end, cost));
                     }
                 }
             }
-    
-            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
         return reservations;
     }
-    
+
+    public static List<Reservations> getReservations() {
+        return reservations;
+    }
+
+    private static Users findUserById(int id) {
+        return users.stream()
+        .filter(u -> u.getstudentid() == id)
+        .findFirst()
+        .orElse(null);
+    }
+
+    private static Vehicles getVehicleById(int id) {
+        return vehicles.stream()
+        .filter(v -> v.getID() == id)
+        .findFirst()
+        .orElse(null);
+    }
 }

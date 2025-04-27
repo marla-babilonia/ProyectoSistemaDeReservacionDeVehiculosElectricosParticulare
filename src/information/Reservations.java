@@ -1,5 +1,6 @@
 package information;
 
+import HelpfulClasses.EnumsHandler;
 import information.AvailableStations.LOCATION;
 
 public class Reservations {

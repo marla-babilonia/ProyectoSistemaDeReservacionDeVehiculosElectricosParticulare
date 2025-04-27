@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import HelpfulClasses.EnumsHandler;
+import HelpfulClasses.TimeSlot;
 import information.AvailableStations.LOCATION;
 
 /* 
@@ -17,8 +18,7 @@ public class Vehicles {
     int id;
     VEHICLE_TYPE vehicleType;
     String description;
-    Map<Integer, Map<Integer, Set<Integer>>> schedule; //Schedule is stored in a map by month (as key)
-                                            // and a value of (key date : value set of times)
+    Map<Integer, Map<Integer, Set<TimeSlot>>> schedule; //Schedule is stored in a map by month (as key) and a value of (key date : value set of times)
     LOCATION location;
     Boolean available;
 
@@ -28,7 +28,7 @@ public class Vehicles {
         SKATEBOARD,
     }
 
-    public Vehicles(Users owner, int id, VEHICLE_TYPE vehicleType, String description, Map<Integer, Map<Integer, Set<Integer>>> schedule, LOCATION location, Boolean available) {
+    public Vehicles(Users owner, int id, VEHICLE_TYPE vehicleType, String description, Map<Integer, Map<Integer, Set<TimeSlot>>> schedule, LOCATION location, Boolean available) {
         this.owner = owner;
         this.id = id;
         this.vehicleType = vehicleType;
@@ -72,11 +72,11 @@ public class Vehicles {
         this.description = description;
     }
 
-    public Map<Integer, Map<Integer, Set<Integer>>> getSchedule() {
+    public Map<Integer, Map<Integer, Set<TimeSlot>>> getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Map<Integer, Map<Integer, Set<Integer>>> schedule) {
+    public void setSchedule(Map<Integer, Map<Integer, Set<TimeSlot>>> schedule) {
         this.schedule = schedule;
     }
 

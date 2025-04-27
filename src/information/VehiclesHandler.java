@@ -1,26 +1,71 @@
 package information;
+
 import CSVHandlers.CSVLoader;
+import HelpfulClasses.EnumsHandler;
+import HelpfulClasses.ScheduleHelper;
+import HelpfulClasses.TimeSlot;
 import information.AvailableStations.LOCATION;
 import information.Vehicles.VEHICLE_TYPE;
+
 import java.util.Scanner;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.Map;
 
 public class VehiclesHandler {
 
-    static Set<Vehicles> compleatvehicles = CSVLoader.loadVehicles();
-  // Buscar vehículo por ID
-  public Vehicles findById(int id, Set<Vehicles> list) {
-      for (Vehicles v : list) {
-          if (v.getID() == id) {
-              return v;
-          }
-      }
-      return null;
-  }
+    static Set<Vehicles> completeVehicles = CSVLoader.loadVehicles();
+
+    public static Set<Vehicles> getVehicles() {
+        return completeVehicles;
+    }
+
+    //Method to print out all the vehicles available using the overriden 
+    //to string function :)
+
+    public static void showAllVehicles() {
+        for (Vehicles v : completeVehicles) {
+            if (!v.getSchedule().isEmpty()){
+                System.out.println(v);
+            }
+        }
+    }
+
+    // Buscar vehículo por ID. Se usa stream para poder manipular mejor el set
+    public static Vehicles getVehicleById(int id) {
+
+        return completeVehicles.stream()
+            .filter(v -> v.getID() == id) //Keep the vehicles with matching ids 
+            .findFirst() //retirn the first one 
+            .orElse(null);
+    }
+
+    //Metodo que prints todos los vehiculos de un mismo owner
+    public static Set<Vehicles> findByOwner(Users owner) {
+
+        Set<Vehicles> results = new HashSet<>();
+        for (Vehicles v : completeVehicles) {
+            if (v.getOwner().equals(owner)) {
+                results.add(v);
+            }
+        }
+        return results;
+    }
+
+    //Metodo que prints todos los vehiculos en el mismo location
+    public static Set<Vehicles> findByStation(LOCATION location) {
+        Set<Vehicles> results = new HashSet<>();
+        for (Vehicles v : completeVehicles) {
+            if (v.getLocation() == location) {
+                results.add(v);
+            }
+        }
+        return results;
+    }
 
   // Editar vehículo 
   public void editVehicleDesc(int id, Set<Vehicles> list) {
-    Vehicles v = findById(id, list);
+    Vehicles v = getVehicleById(id);
     Scanner scan = new Scanner(System.in);
     System.out.println("New Descripcion");
     String descripción = scan.nextLine();
@@ -30,54 +75,124 @@ public class VehiclesHandler {
     v.setID(newid);
   }
 
-  // Remover vehículo manualmente
-  public void removeVehicle(int id, Set<Vehicles> list) {
-      Vehicles exists = findById(id, list);
-      if (exists != null) {
-          list.remove(exists);
-      }
-  }
   //anadir vehiculo
-  public void addVehicle(Set<Vehicles> list) {
+  public static void addVehicle() {
+
      Scanner scanner = new Scanner(System.in);
 
-        // Enter Vehicle ID
-        System.out.print("Enter vehicle ID: ");
-        int id = Integer.parseInt(scanner.nextLine().trim());
+        //Enter Owner
+        System.out.print("Enter Owner ID: ");
+        int ownerId = Integer.parseInt(scanner.nextLine().trim());
+        Users owner = UsersHandler.getUserById(ownerId);
+        if (owner == null) {
+            System.out.println("Owner not found");
+            return;
+        }
+        if (VehiclesHandler.findByOwner(owner).size() >= 2) {
+            System.out.println("Owner already has 2 vehicles");
+            return;
+        }
+
+        // Create the id, adds 1 to the last vehicle id in the set
+        int newId = 1;
+        for (Vehicles v : completeVehicles) {
+            if (v.getID() >= newId) {
+                newId = v.getID() + 1;
+            }
+        }
+        
 
         // Enter Vehicle Type
-        System.out.print("Enter vehicle type (SKOOTER, BICYCLE, SKATEBOARD): ");
-        String vehicleTypeStr = scanner.nextLine().trim().toUpperCase();
-        VEHICLE_TYPE vehicleType = VEHICLE_TYPE.valueOf(vehicleTypeStr);
+        VEHICLE_TYPE type = EnumsHandler.askVehicleTypeOption();
+        if (type == null) {
+            System.out.println("No vehicle type found");
+            return;
+        }
 
         // Enter Description
         System.out.print("Enter description: ");
         String description = scanner.nextLine().trim();
 
         // Enter Schedule
-        System.out.print("Enter schedule (0 for no schedule): ");
-        int schedule = Integer.parseInt(scanner.nextLine().trim());
+        System.out.print("Will you add availability? (y/n): ");
+
+        Map<Integer, Map<Integer, Set<TimeSlot>>> schedule = ScheduleHelper.createEmptySchedule();
+
+        if (scanner.nextLine().trim().equalsIgnoreCase("y")) {
+            boolean adding = true;
+
+            while (adding) {
+                int month = ScheduleHelper.askMonthAndValidate(scanner);
+                int day = ScheduleHelper.askDateAndValidate(scanner);
+                int startTime = ScheduleHelper.askStartTimeAndValidate(scanner);
+                int endTime = ScheduleHelper.askEndTimeAndValidate(scanner, startTime);
+
+                ScheduleHelper.addAvailability(schedule, month, day, startTime, endTime);
+
+                System.out.print("Add another time slot? (y/n): ");
+                adding = scanner.nextLine().trim().equalsIgnoreCase("y");
+            }
+        }
 
         // Enter Location
-        System.out.print("Enter location (EDIFICIO_STEFANI, CENTRO_DE_ESTUDIANTES, EDIFICIO_DE_BIOLOGIA, EDIFICIO_INGENIERIA_QUIMICA, EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS): ");
-        String locationStr = scanner.nextLine().trim().toUpperCase();
-        LOCATION location = EnumsHandler.getLocation(locationStr);
+        LOCATION location = EnumsHandler.askLocationOption();
+        if (location == null) {
+            System.out.println("No location found");
+            return;
+        }
 
         // Enter Availability
-        System.out.print("Enter availability (true or false): ");
-        boolean available = Boolean.parseBoolean(scanner.nextLine().trim());
+        boolean available = !schedule.isEmpty();
+
+        // System.out.print("Enter availability (true or false): ");
+        // boolean available = Boolean.parseBoolean(scanner.nextLine().trim());
 
         // Create the vehicle
-        Vehicles newVehicle = new Vehicles(id, vehicleType, description, schedule, location, available);
-        compleatvehicles.add(newVehicle);
+        Vehicles newVehicle = new Vehicles(owner, newId, type, description, schedule, location, available);
+        completeVehicles.add(newVehicle);
+        System.out.println("Vehicle added");
   }
 
-  public static Vehicles getVehicleById(int id) {
-    return compleatvehicles.stream()
-        .filter(v -> v.getID() == id)
-        .findFirst()
-        .orElse(null);
+  //remove vehicle by either the id of one vehicle , or remove all owners vehicles
+
+  public static void removeVehicle() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.print("Remove by (1) ID or (2) Owner? ");
+    int option = Integer.parseInt(scanner.nextLine().trim());
+
+    if (option == 1) {
+        System.out.print("Enter Vehicle ID: ");
+        int id = Integer.parseInt(scanner.nextLine().trim());
+        Vehicles vehicle = getVehicleById(id);
+
+        if (vehicle != null) {
+            completeVehicles.remove(vehicle);
+            System.out.println("SUCCESFULLY TERMINATED");
+        } else {
+            System.out.println("Vehicle not found");
+        }
+
+    } else {
+        System.out.print("Enter Owner Student ID: ");
+
+        int ownerId = Integer.parseInt(scanner.nextLine().trim());
+        Users owner = UsersHandler.getUserById(ownerId);
+        if (owner != null) {
+            Set<Vehicles> ownerVehicles = findByOwner(owner);
+            if (ownerVehicles.isEmpty()) {
+                System.out.println("No vehicles found");
+            } else {
+                completeVehicles.removeAll(ownerVehicles);
+                System.out.println(ownerVehicles.size() + "TWAS REMOVED");
+            }
+
+        } else {
+            System.out.println("Owner not found");
+        }
     }
+  }
+
+  
 
 
 

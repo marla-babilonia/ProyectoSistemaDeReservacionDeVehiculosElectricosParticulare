@@ -52,7 +52,7 @@ public class UsersHandler {
             phoneStr = scanner.nextLine().trim();
         }
 
-        int phone = Integer.parseInt(phoneStr);
+        long phone = Integer.parseInt(phoneStr);
         System.out.print("Select user type (1=OWNER, 2=CLIENT, 3=BOTH): ");
         int typeOpt;
         try {
