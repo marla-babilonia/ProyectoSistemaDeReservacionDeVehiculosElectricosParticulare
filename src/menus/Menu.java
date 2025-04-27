@@ -1,6 +1,7 @@
 package menus;
 
 import information.ReservationsHandler;
+import information.TransactionsHandler;
 import information.UsersHandler;
 import information.VehiclesHandler;
 import information.WaitlistHandler;
@@ -18,9 +19,10 @@ public class Menu {
             System.out.println("2. Manage Users");
             System.out.println("3. Manage Vehicles");
             System.out.println("4. Manage Waitlist");
-            System.out.println("5. Quit");
+            System.out.println("5. Manage Transactions");
+            System.out.println("6. Quit");
 
-            System.out.print("Enter option (1-5): ");
+            System.out.print("Enter option (1-6): ");
             String input = scanner.nextLine().trim();
 
             switch (input) {
@@ -37,6 +39,9 @@ public class Menu {
                     displayWaitlistMenu();
                     break;
                 case "5":
+                    displayTransactionMenu();
+                break;
+                case "6":
                     quitProgram();
                     running = false;
                     break;
@@ -175,6 +180,27 @@ public class Menu {
                     break;
                 case "3":
                     managingWaitlist = false;
+                    break;
+                default:
+                    System.out.println("Invalid option, try again");
+            }
+        }
+    }
+     private static void displayTransactionMenu() {
+        boolean managingTransactions = true;
+        while (managingTransactions) {
+            System.out.println("\nMANAGE TRANSACTIONS");
+            System.out.println("1. View Transactions");
+            System.out.println("2. Go Back");
+            System.out.print("Enter option (1-2): ");
+            String input = scanner.nextLine().trim();
+    
+            switch (input) {
+                case "1":
+                    TransactionsHandler.showAllTransactions();
+                    break;
+                case "2":
+                    managingTransactions = false;
                     break;
                 default:
                     System.out.println("Invalid option, try again");
