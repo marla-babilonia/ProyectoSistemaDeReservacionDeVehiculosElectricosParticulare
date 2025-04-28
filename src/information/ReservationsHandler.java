@@ -53,6 +53,18 @@ public class ReservationsHandler {
             }         
         }
 
+        for (Reservations existing : reservations) {
+            if (existing.getStudent().getstudentid() == user.getstudentid()
+              && existing.getMonth() == month
+              && existing.getDate() == day
+              && ScheduleHelper.timesOverlap(start, end,
+                    existing.getStartTime(), existing.getEndTime()))
+            {
+                System.out.println("Sorry no double booking :/");
+                return;
+            }
+        }
+
         List<Vehicles> available = checkAvailability(month, day, start, end);
         if (available.isEmpty()) {
             System.out.println("No vehicles available for that time slot.");
@@ -99,8 +111,15 @@ public class ReservationsHandler {
             if (v.getVehicleType() == chosenType) filtered.add(v);
         }
 
-        System.out.println("Available vehicles of type " + chosenType + ":");
-        for (Vehicles v : filtered) System.out.println(v);
+        System.out.println("Available vehicles of type " + chosenType + " (ID – description – cost):");
+        for (Vehicles v : filtered) {
+            double c = calculateCost(duration, v.getVehicleType());
+            System.out.printf("ID %d – %s – %.1f credits%n",
+            v.getID(),
+            v.getdescription(),
+            c
+        );
+}
 
         System.out.print("Enter desired Vehicle ID: ");
         int vehicleId = Integer.parseInt(scanner.nextLine());
@@ -112,7 +131,7 @@ public class ReservationsHandler {
         }
 
         double cost = calculateCost(duration, vehicle.getVehicleType());
-        System.out.printf("Total credit cost: %.1f%n", cost);
+        System.out.printf("You chose vehicle %d. Total cost: %.1f credits%n", vehicle.getID(), cost);
 
         Users owner = vehicle.getOwner();
         owner.setCredits(owner.getCredits() + cost);

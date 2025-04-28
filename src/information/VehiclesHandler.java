@@ -7,6 +7,11 @@ import HelpfulClasses.TimeSlot;
 import information.AvailableStations.LOCATION;
 import information.Vehicles.VEHICLE_TYPE;
 import java.util.HashSet;
+<<<<<<< HEAD
+=======
+import java.util.List;
+import java.util.Set;
+>>>>>>> f23dabb1379d6f02be22b9a4253806a8bbc96da6
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -270,6 +275,28 @@ public class VehiclesHandler {
         }
     }
 }
+
+    public static void showVehiclesWithReservations() {
+        System.out.println("Vehicles and their reservations");
+        List<Reservations> allReservations = CSVLoader.getReservations();
+        for (Vehicles vehicle : completeVehicles) {
+            System.out.println(vehicle);
+            boolean any = false;
+            for (Reservations reservation : allReservations) {
+                if (reservation.getVehicle().getID() == vehicle.getID()) {
+                    System.out.printf("  – %02d/%02d %04d-%04d by student %d (%.1f credits)%n",
+                        reservation.getMonth(), reservation.getDate(),
+                        reservation.getStartTime(), reservation.getEndTime(),
+                        reservation.getStudent().getstudentid(),
+                        reservation.getCreditCost());
+                    any = true;
+                }
+            }
+            if (!any) {
+                System.out.println("  (no reservations)");
+            }
+        }
+    }
 
 
   
