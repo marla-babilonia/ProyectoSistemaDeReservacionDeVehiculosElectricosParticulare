@@ -1,5 +1,4 @@
 package information;
-
 import CSVHandlers.CSVLoader;
 import HelpfulClasses.EnumsHandler;
 import HelpfulClasses.ScheduleHelper;
@@ -124,6 +123,7 @@ public class ReservationsHandler {
         System.out.println("Reservation confirmed:\n" + reservation);
 
         //this creates a transaction and records it at the same time,
+        UndoStack.recordReservationAddition(reservation, user, vehicle.getOwner(), cost);
         Transaction transaction = new Transaction(user, owner, vehicle, cost, month, day, start, end);
         TransactionsHandler.addTransaction(transaction);
         System.out.println("Transaction recorded.");
@@ -160,6 +160,7 @@ public class ReservationsHandler {
         owner.setCredits(owner.getCredits() - selected.getCreditCost());
         client.setCredits(client.getCredits() + selected.getCreditCost());
 
+        UndoStack.recordReservationDeletion(selected, client, owner, selected.getCreditCost());
         reservations.remove(selected);
         System.out.println("Reservation cancelled successfully.");
     }

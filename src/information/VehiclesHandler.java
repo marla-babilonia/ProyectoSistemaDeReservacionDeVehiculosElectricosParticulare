@@ -6,11 +6,10 @@ import HelpfulClasses.ScheduleHelper;
 import HelpfulClasses.TimeSlot;
 import information.AvailableStations.LOCATION;
 import information.Vehicles.VEHICLE_TYPE;
-
-import java.util.Scanner;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 public class VehiclesHandler {
 
@@ -155,6 +154,7 @@ public class VehiclesHandler {
 
         // Create the vehicle
         Vehicles newVehicle = new Vehicles(owner, newId, type, description, schedule, location, available);
+        UndoStack.recordVehicleAddition(newVehicle);
         completeVehicles.add(newVehicle);
         //increase the vehicle owned by one
         owner.setVehiclesOwned(owner.getVehiclesOwned() + 1);
@@ -162,7 +162,7 @@ public class VehiclesHandler {
         System.out.println("Vehicle added");
   }
 
-  //remove vehicle by either the id of one vehicle , or remove all owners vehicles
+  //remove vehicle by either the id of one vehicle, or remove all owners vehicles
 
   public static void removeVehicle() {
     Scanner scanner = new Scanner(System.in);
@@ -177,8 +177,9 @@ public class VehiclesHandler {
         if (vehicle != null) {
             AvailableStations station = AvailableStationsHandler.getStationByLocation(vehicle.getLocation());
                 if (station != null) {
-                    station.decreaseCurrentCapacity();  // 🚀
+                    station.decreaseCurrentCapacity();  
                 }
+                UndoStack.recordVehicleDeletion(vehicle);
             completeVehicles.remove(vehicle);
             vehicle.getOwner().setVehiclesOwned(vehicle.getOwner().getVehiclesOwned() - 1);
             System.out.println("SUCCESFULLY TERMINATED");
@@ -197,6 +198,7 @@ public class VehiclesHandler {
                 System.out.println("No vehicles found");
             } else {
                 for (Vehicles v : ownerVehicles) {
+                    UndoStack.recordVehicleDeletion(v);
                     AvailableStations station = AvailableStationsHandler.getStationByLocation(v.getLocation());
                     if (station != null) {
                         station.decreaseCurrentCapacity();
