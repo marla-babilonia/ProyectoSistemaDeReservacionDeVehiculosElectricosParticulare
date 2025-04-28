@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
+import java.util.Queue;
 
 import HelpfulClasses.EnumsHandler;
 import HelpfulClasses.ScheduleHelper;
@@ -128,8 +129,8 @@ public class CSVLoader {
         return reservations;
     }
 
-    public static List<Waitlist> loadWaitlists() {
-        List<Waitlist> waitlist = new ArrayList<>();
+    public static Queue<Waitlist> loadWaitlists() {
+        Queue<Waitlist> waitlist = new LinkedList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("resources/waitlist.csv"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -148,7 +149,7 @@ public class CSVLoader {
                     Users u = findUserById(sid);
                     Vehicles v = getVehicleById(vid);
                     if (u != null && v != null) {
-                        waitlist.add(new Waitlist(num, u, v, station, mon, day, st, en, cost));
+                        waitlist.offer(new Waitlist(num, u, v, station, mon, day, st, en, cost));
                     }
                 }
             }
