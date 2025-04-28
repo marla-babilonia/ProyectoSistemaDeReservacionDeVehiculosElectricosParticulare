@@ -13,8 +13,6 @@ import java.util.Scanner;
 public class WaitlistHandler {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static final List<Users> users      = UsersHandler.getUsers();
-    private static final Set<Vehicles> vehicles = VehiclesHandler.getVehicles();
     private static final List<Waitlist> waitlists = CSVLoader.loadWaitlists();
 
     public static void addWaitlistEntry(Waitlist entry) {
@@ -33,45 +31,51 @@ public class WaitlistHandler {
 
     /* Prints all waitlist entries. */
     public static void showWaitlist() {
-            if (waitlists.isEmpty()) {
-              System.out.println("No waitlist entries found.");
-                return;
+        if (waitlists.isEmpty()) {
+            System.out.println("No waitlist entries found.");
+            return;
+        }
+        System.out.println("\n=== WAITLIST ENTRIES ===");
+        for (Waitlist w : waitlists) {
+            String vehicleId;
+            if (w.getVehicle() != null) {
+                vehicleId = Integer.toString(w.getVehicle().getID());
+            } else {
+                vehicleId = "ANY";
             }
-             System.out.println("\n=== WAITLIST ENTRIES ===");
-              for (Waitlist w : waitlists) {
-                    
-                    String vehicleId = (w.getVehicle() != null)
-                       ? String.valueOf(w.getVehicle().getID())
-                       : "ANY";
-                   
-                  String credits = String.format("%.1f", w.getTotalCredits());
-    
-                 System.out.printf(
-                     "#%d  User:%s  Vehicle:%s  Station:%s  Start:%s  End:%s  Credits:%s%n",
-                    w.getWaitlistNum(),
-                       w.getUser().getstudentname(),
-                     vehicleId,
-                        EnumsHandler.formatStationName(w.getLocation()),
-                       w.getStartTime(),
-                        w.getEndTime(),
-                        credits
-                    );
-                }
-           }
+            System.out.printf(
+                "#%d  User:%s  Vehicle:%s  Station:%s  Start:%s  End:%s  Credits:%.1f%n",
+                w.getWaitlistNum(),
+                w.getUser().getstudentname(),
+                vehicleId,
+                EnumsHandler.formatStationName(w.getLocation()),
+                w.getStartTime(),
+                w.getEndTime(),
+                w.getTotalCredits()
+            );
+        }
+    }
 
     /* Removes a waitlist entry by its number. */
     public static void removeWaitlistEntry() {
         System.out.print("Enter waitlist entry number to remove: ");
         int num = Integer.parseInt(scanner.nextLine().trim());
-        Iterator<Waitlist> iterator = waitlists.iterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().getWaitlistNum() == num) {
-                iterator.remove();
-                System.out.println("Removed waitlist entry #" + num);
-                return;
+
+        boolean removed = false;
+        Iterator<Waitlist> it = waitlists.iterator();
+        while (it.hasNext()) {
+            if (it.next().getWaitlistNum() == num) {
+                it.remove();
+                removed = true;
+                break;
             }
         }
-        System.out.println("No waitlist entry with number " + num);
+
+        if (removed) {
+            System.out.println("Removed waitlist entry number " + num);
+        } else {
+            System.out.println("No waitlist entry with number " + num);
+        }
     }
 
     public static List<Waitlist> getWaitlists() {
