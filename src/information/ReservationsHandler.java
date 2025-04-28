@@ -23,13 +23,22 @@ public class ReservationsHandler {
     public static void addReservation() {
 
         //Start by getting the users ID
-        System.out.print("To add a reservation please enter the user's ID:");
-        int userIDString = Integer.parseInt(scanner.nextLine());
-        Users  user = UsersHandler.getUserById(userIDString);
-        if (user == null) {
-            System.out.println("User not found");
-            return;
+        Integer userID = null;
+        while (userID == null) {
+           System.out.print("To add a reservation please enter the user's ID: ");
+           String line = scanner.nextLine().trim();
+           try {
+                userID = Integer.parseInt(line);
+           } catch (NumberFormatException e) {
+               System.out.println("Invalid ID. Please enter a numeric user ID.");
+             }
         }
+            Users user = UsersHandler.getUserById(userID);
+            if (user == null) {
+                System.out.println("User not found");
+                return;
+        }
+
         boolean flag = false;
         int month = -1;
         int day = -1;
