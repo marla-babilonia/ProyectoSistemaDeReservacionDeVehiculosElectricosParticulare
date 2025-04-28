@@ -7,11 +7,7 @@ import HelpfulClasses.TimeSlot;
 import information.AvailableStations.LOCATION;
 import information.Vehicles.VEHICLE_TYPE;
 import java.util.HashSet;
-<<<<<<< HEAD
-=======
 import java.util.List;
-import java.util.Set;
->>>>>>> f23dabb1379d6f02be22b9a4253806a8bbc96da6
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;

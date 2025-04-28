@@ -1,18 +1,15 @@
 package menus;
 
+import CSVHandlers.CSVLoader;
+import CSVHandlers.CSVUpdater;
 import information.AvailableStationsHandler;
 import information.ReservationsHandler;
 import information.TransactionsHandler;
+import information.UndoStack;
 import information.UsersHandler;
 import information.VehiclesHandler;
 import information.WaitlistHandler;
-
-import java.io.IOException;
-// import station.StationHandler;
 import java.util.Scanner;
-
-import CSVHandlers.CSVLoader;
-import CSVHandlers.CSVUpdater;
 
 public class Menu {
     private static final Scanner scanner = new Scanner(System.in);
@@ -65,9 +62,10 @@ public class Menu {
             System.out.println("2. Add Reservation");
             System.out.println("3. Remove Reservation");
             System.out.println("4. Modify Reservation");
-            System.out.println("5. Go Back");
+            System.out.println("6. Redo Last Undo");
+            System.out.println("7. Go Back");
 
-            System.out.print("Enter option (1-5): ");
+            System.out.print("Enter option (1-6): ");
             String input = scanner.nextLine().trim();
 
             switch (input) {
@@ -84,6 +82,12 @@ public class Menu {
                     ReservationsHandler.modifyReservation();
                     break;
                 case "5":
+                    UndoStack.undoLastAction();
+                    break;
+                case "6":
+                    UndoStack.redoLastAction();
+                    break;
+                case "7":
                     managingReservations = false;
                     break;
                 default:
@@ -100,9 +104,11 @@ public class Menu {
             System.out.println("2. Add User");
             System.out.println("3. Remove User");
             System.out.println("4. Modify User");
-            System.out.println("5. Go Back");
+            System.out.println("5. Undo Last Action");
+            System.out.println("6. Redo Last Undo");
+            System.out.println("7. Go Back");
 
-            System.out.print("Enter option (1-5): ");
+            System.out.print("Enter option (1-7): ");
             String input = scanner.nextLine().trim();
 
             switch (input) {
@@ -123,6 +129,12 @@ public class Menu {
                     UsersHandler.modifyUser(modifyId);
                     break;
                 case "5":
+                    UndoStack.undoLastAction();
+                    break;
+                case "6":
+                    UndoStack.redoLastAction();
+                    break;
+                case "7":
                     managingUsers = false;
                     break;
                 default:
@@ -141,9 +153,11 @@ public class Menu {
             System.out.println("4. Modify Vehicle");
             System.out.println("5. View reserved vehicles");
             System.out.println("6. View vehicles by station");
-            System.out.println("7. Go Back");
+            System.out.println("7. Undo Last Action");
+            System.out.println("8. Redo Last Undo");
+            System.out.println("9. Go Back");
 
-            System.out.print("Enter option (1-5): ");
+            System.out.print("Enter option (1-9): ");
             String input = scanner.nextLine().trim();
 
             switch (input) {
@@ -166,8 +180,15 @@ public class Menu {
                         AvailableStationsHandler.showStationsWithVehicles();
                         break;
                 case "7":
-                    managingVehicles = false;
-                    break;
+                        UndoStack.undoLastAction();
+                        break;
+                case "8":
+                        UndoStack.redoLastAction();
+                        break;
+                case "9":
+                        managingVehicles = false;
+                        break;
+    
                 default:
                     System.out.println("Invalid option, try again");
             }

@@ -16,7 +16,7 @@ public class ReservationsHandler {
     private static final Scanner scanner = new Scanner(System.in);
     
     private static final List<Users> users = UsersHandler.getUsers();
-    private static final Set<Vehicles> vehicles = VehiclesHandler.getVehicles();
+    private static final Set<Vehicles> vehicles = (Set<Vehicles>) VehiclesHandler.getVehicles();
     private static final List<Reservations> reservations = CSVLoader.getReservations();
 
     public static void addReservation() {
