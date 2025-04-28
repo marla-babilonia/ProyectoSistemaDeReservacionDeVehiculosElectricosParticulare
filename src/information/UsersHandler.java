@@ -1,10 +1,9 @@
 package information;
 
+import CSVHandlers.CSVLoader;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-
-import CSVHandlers.CSVLoader;
 
 public class UsersHandler {
     
@@ -75,19 +74,25 @@ public class UsersHandler {
         
 
         Users newUser = new Users(name, studentId, email, phone, type, credits, vehiclesOwned);
+        UndoStack.recordUserAddition(newUser);
         users.add(newUser);
         System.out.println("User added successfully.");
     }
 
     
     public static void removeUser(int id) {
+        Users userToRemove = getUserById(id);
         boolean removed = users.removeIf(u -> u.getstudentid() == id);
         if (removed) {
+            UndoStack.recordUserDeletion(userToRemove);
             System.out.println("User removed.");
         } else {
             System.out.println("No user found with ID " + id);
         }
     }
+
+
+
 
     public static void modifyUser(int id) {
         Users u = users.stream()

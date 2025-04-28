@@ -11,33 +11,39 @@ public class UndoStack {
         enum ActionType { ADD, DELETE }
     
         private Reservations reservation;
-        private Transaction transaction;
+        private double transactionAmount;
+        private Users client;
+        private Users owner;
         private Users user;
         private Vehicles vehicle;
         private ActionType actionType;
     
-        // Constructor for reservation & transaction
-        public UndoAction(Reservations reservation, Transaction transaction, ActionType actionType) {
+
+        public UndoAction(Reservations reservation, Users client, Users owner, double transactionAmount, ActionType actionType) {
             this.reservation = reservation;
-            this.transaction = transaction;
+            this.client = client;
+            this.owner = owner;
+            this.transactionAmount = transactionAmount;
             this.actionType = actionType;
         }
     
-        // Constructor for user
+
         public UndoAction(Users user, ActionType actionType) {
             this.user = user;
             this.actionType = actionType;
         }
     
-        // Constructor for vehicle
+
         public UndoAction(Vehicles vehicle, ActionType actionType) {
             this.vehicle = vehicle;
             this.actionType = actionType;
         }
     
-        // Getters
+
         public Reservations getReservation() { return reservation; }
-        public Transaction getTransaction() { return transaction; }
+        public double getTransactionAmount() { return transactionAmount; }
+        public Users getClient() { return client; }
+        public Users getOwner() { return owner; }
         public Users getUser() { return user; }
         public Vehicles getVehicle() { return vehicle; }
         public ActionType getActionType() { return actionType; }
@@ -52,34 +58,21 @@ public class UndoStack {
         UndoAction lastAction = undoStack.pop();
         redoStack.push(lastAction);
     
-        if (lastAction.getReservation() != null && lastAction.getTransaction() != null) {
+        if (lastAction.getReservation() != null && lastAction.getClient() != null && lastAction.getOwner() != null) {
             if (lastAction.getActionType() == UndoAction.ActionType.ADD) {
-                // Undo reservation addition -> REMOVE them
+                
                 if (CSVLoader.getReservations().remove(lastAction.getReservation())) {
                     System.out.println("Reservation undone (removed).");
                 }
-                if (TransactionsHandler.getAllTransactions().remove(lastAction.getTransaction())) {
-                    System.out.println("Transaction undone (removed).");
-                }
-                Users client = lastAction.getTransaction().getClient();
-                Users owner = lastAction.getTransaction().getOwner();
-                double credits = lastAction.getTransaction().getCreditAmount();
-    
-                client.setCredits(client.getCredits() + credits);
-                owner.setCredits(owner.getCredits() - credits);
+                lastAction.getClient().setCredits(lastAction.getClient().getCredits() + lastAction.getTransactionAmount());
+                lastAction.getOwner().setCredits(lastAction.getOwner().getCredits() - lastAction.getTransactionAmount());
                 System.out.println("Credits refunded.");
             } else if (lastAction.getActionType() == UndoAction.ActionType.DELETE) {
-                // Undo reservation deletion -> ADD them back
+                
                 CSVLoader.getReservations().add(lastAction.getReservation());
-                TransactionsHandler.getAllTransactions().add(lastAction.getTransaction());
-    
-                Users client = lastAction.getTransaction().getClient();
-                Users owner = lastAction.getTransaction().getOwner();
-                double credits = lastAction.getTransaction().getCreditAmount();
-    
-                client.setCredits(client.getCredits() - credits);
-                owner.setCredits(owner.getCredits() + credits);
-                System.out.println("Reservation and transaction restored.");
+                lastAction.getClient().setCredits(lastAction.getClient().getCredits() - lastAction.getTransactionAmount());
+                lastAction.getOwner().setCredits(lastAction.getOwner().getCredits() + lastAction.getTransactionAmount());
+                System.out.println("Reservation restored and credits adjusted.");
             }
         } else if (lastAction.getUser() != null) {
             if (lastAction.getActionType() == UndoAction.ActionType.ADD) {
@@ -114,33 +107,17 @@ public class UndoStack {
         UndoAction lastAction = redoStack.pop();
         undoStack.push(lastAction);
     
-        if (lastAction.getReservation() != null && lastAction.getTransaction() != null) {
+        if (lastAction.getReservation() != null && lastAction.getClient() != null && lastAction.getOwner() != null) {
             if (lastAction.getActionType() == UndoAction.ActionType.ADD) {
-                // Redo reservation addition
                 CSVLoader.getReservations().add(lastAction.getReservation());
-                TransactionsHandler.getAllTransactions().add(lastAction.getTransaction());
-    
-                Users client = lastAction.getTransaction().getClient();
-                Users owner = lastAction.getTransaction().getOwner();
-                double credits = lastAction.getTransaction().getCreditAmount();
-    
-                client.setCredits(client.getCredits() - credits);
-                owner.setCredits(owner.getCredits() + credits);
-    
-                System.out.println("Reservation and transaction redone.");
+                lastAction.getClient().setCredits(lastAction.getClient().getCredits() - lastAction.getTransactionAmount());
+                lastAction.getOwner().setCredits(lastAction.getOwner().getCredits() + lastAction.getTransactionAmount());
+                System.out.println("Reservation re-added and credits deducted/added.");
             } else if (lastAction.getActionType() == UndoAction.ActionType.DELETE) {
-                // Redo reservation deletion
                 CSVLoader.getReservations().remove(lastAction.getReservation());
-                TransactionsHandler.getAllTransactions().remove(lastAction.getTransaction());
-    
-                Users client = lastAction.getTransaction().getClient();
-                Users owner = lastAction.getTransaction().getOwner();
-                double credits = lastAction.getTransaction().getCreditAmount();
-    
-                client.setCredits(client.getCredits() + credits);
-                owner.setCredits(owner.getCredits() - credits);
-    
-                System.out.println("Reservation and transaction removal redone.");
+                lastAction.getClient().setCredits(lastAction.getClient().getCredits() + lastAction.getTransactionAmount());
+                lastAction.getOwner().setCredits(lastAction.getOwner().getCredits() - lastAction.getTransactionAmount());
+                System.out.println("Reservation re-deleted and credits adjusted.");
             }
         } else if (lastAction.getUser() != null) {
             if (lastAction.getActionType() == UndoAction.ActionType.ADD) {
@@ -162,36 +139,33 @@ public class UndoStack {
     }
     
 
-public static void recordReservationAddition(Reservations reservation, Transaction transaction) {
-    undoStack.push(new UndoAction(reservation, transaction, UndoAction.ActionType.ADD));
-    redoStack.clear();
+    public static void recordReservationAddition(Reservations reservation, Users client, Users owner, double transactionAmount) {
+        undoStack.push(new UndoAction(reservation, client, owner, transactionAmount, UndoAction.ActionType.ADD));
+        redoStack.clear();
+    }
+
+    public static void recordReservationDeletion(Reservations reservation, Users client, Users owner, double transactionAmount) {
+        undoStack.push(new UndoAction(reservation, client, owner, transactionAmount, UndoAction.ActionType.DELETE));
+        redoStack.clear();
+    }
+
+    public static void recordUserAddition(Users user) {
+        undoStack.push(new UndoAction(user, UndoAction.ActionType.ADD));
+        redoStack.clear();
+    }
+
+    public static void recordUserDeletion(Users user) {
+        undoStack.push(new UndoAction(user, UndoAction.ActionType.DELETE));
+        redoStack.clear();
+    }
+
+    public static void recordVehicleAddition(Vehicles vehicle) {
+        undoStack.push(new UndoAction(vehicle, UndoAction.ActionType.ADD));
+        redoStack.clear();
+    }
+
+    public static void recordVehicleDeletion(Vehicles vehicle) {
+        undoStack.push(new UndoAction(vehicle, UndoAction.ActionType.DELETE));
+        redoStack.clear();
+    }
 }
-
-public static void recordReservationDeletion(Reservations reservation, Transaction transaction) {
-    undoStack.push(new UndoAction(reservation, transaction, UndoAction.ActionType.DELETE));
-    redoStack.clear();
-}
-
-
-public static void recordUserAddition(Users user) {
-    undoStack.push(new UndoAction(user, UndoAction.ActionType.ADD));
-    redoStack.clear();
-}
-
-public static void recordUserDeletion(Users user) {
-    undoStack.push(new UndoAction(user, UndoAction.ActionType.DELETE));
-    redoStack.clear();
-}
-
-
-public static void recordVehicleAddition(Vehicles vehicle) {
-    undoStack.push(new UndoAction(vehicle, UndoAction.ActionType.ADD));
-    redoStack.clear();
-}
-
-public static void recordVehicleDeletion(Vehicles vehicle) {
-    undoStack.push(new UndoAction(vehicle, UndoAction.ActionType.DELETE));
-    redoStack.clear();
-}
-
-} 
