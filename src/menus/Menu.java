@@ -216,7 +216,7 @@ public class Menu {
     private static void quitProgram() {
         System.out.println("Saving changes...");
         
-        CSVUpdater.saveAllCSVs(UsersHandler.getUsers(), VehiclesHandler.getVehicles(), CSVLoader.getReservations(), TransactionsHandler.getAllTransactions(), WaitlistHandler.getWaitlists());
+        CSVUpdater.saveAllCSVs(UsersHandler.getUsers(), VehiclesHandler.getVehicles(), CSVLoader.getReservations(), TransactionsHandler.getAllTransactions(), WaitlistHandler.getWaitlist());
         //falta salvar a los csv
 
         System.out.println("You're Welcome :)");

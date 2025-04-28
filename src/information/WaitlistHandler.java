@@ -2,26 +2,23 @@ package information;
 
 import CSVHandlers.CSVLoader;
 import HelpfulClasses.EnumsHandler;
-import information.AvailableStations.LOCATION;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Set;
-import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class WaitlistHandler {
     private static final Scanner scanner = new Scanner(System.in);
 
-    private static final List<Waitlist> waitlists = CSVLoader.loadWaitlists();
+    private static final Queue<Waitlist> waitlist = new LinkedList<>(CSVLoader.loadWaitlists());
 
     public static void addWaitlistEntry(Waitlist entry) {
-        waitlists.add(entry);
+        waitlist.add(entry);
     }
 
     public static int nextNum() {
     int max = 0;
-    for (Waitlist w : waitlists) {
+    for (Waitlist w : waitlist) {
         if (w.getWaitlistNum() > max) {
             max = w.getWaitlistNum();
         }
@@ -31,12 +28,12 @@ public class WaitlistHandler {
 
     /* Prints all waitlist entries. */
     public static void showWaitlist() {
-        if (waitlists.isEmpty()) {
+        if (waitlist.isEmpty()) {
             System.out.println("No waitlist entries found.");
             return;
         }
         System.out.println("\n=== WAITLIST ENTRIES ===");
-        for (Waitlist w : waitlists) {
+        for (Waitlist w : waitlist) {
             String vehicleId;
             if (w.getVehicle() != null) {
                 vehicleId = Integer.toString(w.getVehicle().getID());
@@ -62,7 +59,7 @@ public class WaitlistHandler {
         int num = Integer.parseInt(scanner.nextLine().trim());
 
         boolean removed = false;
-        Iterator<Waitlist> it = waitlists.iterator();
+        Iterator<Waitlist> it = waitlist.iterator();
         while (it.hasNext()) {
             if (it.next().getWaitlistNum() == num) {
                 it.remove();
@@ -78,7 +75,7 @@ public class WaitlistHandler {
         }
     }
 
-    public static List<Waitlist> getWaitlists() {
-        return new ArrayList<>(waitlists);
-    }
+    public static Queue<Waitlist> getWaitlist() {
+        return waitlist;
+      }
 }

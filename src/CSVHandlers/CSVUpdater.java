@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 public class CSVUpdater {
@@ -90,7 +91,7 @@ public class CSVUpdater {
         System.out.println("Transactions saved");
     }
 
-    public static void saveWaitlist(List<Waitlist> waitlist) throws IOException {
+    public static void saveWaitlist(Queue<Waitlist> waitlist) throws IOException {
         try (BufferedWriter w = new BufferedWriter(new FileWriter("resources/waitlist.csv"))) {
             for (Waitlist waitlistEntry : waitlist) {
                 String locationName = (waitlistEntry.getLocation() != null) ? waitlistEntry.getLocation().name() : "UNKNOWN";
@@ -117,7 +118,7 @@ public class CSVUpdater {
             Set<Vehicles> vehicles,
             List<Reservations> reservations,
             LinkedList<Transaction> transactions,
-            List<Waitlist> waitlist
+            Queue<Waitlist> waitlist
     ) {
         try {
             saveUsers(users);
