@@ -63,15 +63,17 @@ public class Transaction {
         return endTime;
     }
     public String toString() {
-        return String.format("Transaction ID: %d | Client: %s | Owner: %s | Vehicle: %s | Credits: " + creditAmount, "| Date: %02d/%02d | Time: %02d:00-%02d:00",
-                transactionId,
-                client.getstudentid(),
-                owner.getstudentid(),
-                vehicle.getID(),
-                month,
-                day,
-                startTime,
-                endTime
+        return String.format(
+           "Transaction ID: %d | Client: %d | Owner: %d | Vehicle: %d | Credits: %.1f | Date: %02d/%02d | Time: %04d-%04d",
+            transactionId,
+            client.getstudentid(),
+            owner.getstudentid(),
+            vehicle.getID(),
+            creditAmount,
+            month,
+            day,
+            startTime,
+            endTime
         );
     }
 

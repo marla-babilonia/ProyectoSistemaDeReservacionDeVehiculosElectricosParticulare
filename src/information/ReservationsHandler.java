@@ -113,7 +113,7 @@ public class ReservationsHandler {
         }
 
         double cost = calculateCost(duration, vehicle.getVehicleType());
-        System.out.printf("Total credit cost: %.0f%n", cost);
+        System.out.printf("Total credit cost: %.1f%n", cost);
 
         Users owner = vehicle.getOwner();
         owner.setCredits(owner.getCredits() + cost);

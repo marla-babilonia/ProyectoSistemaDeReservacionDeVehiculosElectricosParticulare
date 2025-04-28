@@ -33,24 +33,31 @@ public class WaitlistHandler {
 
     /* Prints all waitlist entries. */
     public static void showWaitlist() {
-        if (waitlists.isEmpty()) {
-            System.out.println("No waitlist entries found.");
-            return;
-        }
-        System.out.println("\n=== WAITLIST ENTRIES ===");
-        for (Waitlist w : waitlists) {
-            System.out.printf(
-                "#%d  User:%s  Vehicle:%d  Station:%s  Start:%s  End:%s  Credits:%d%n",
-                w.getWaitlistNum(),
-                w.getUser().getstudentname(),
-                w.getVehicle().getID(),
-                EnumsHandler.formatStationName(w.getLocation()),
-                w.getStartTime(),
-                w.getEndTime(),
-                w.getTotalCredits()
-            );
-        }
-    }
+            if (waitlists.isEmpty()) {
+              System.out.println("No waitlist entries found.");
+                return;
+            }
+             System.out.println("\n=== WAITLIST ENTRIES ===");
+              for (Waitlist w : waitlists) {
+                    
+                    String vehicleId = (w.getVehicle() != null)
+                       ? String.valueOf(w.getVehicle().getID())
+                       : "ANY";
+                   
+                  String credits = String.format("%.1f", w.getTotalCredits());
+    
+                 System.out.printf(
+                     "#%d  User:%s  Vehicle:%s  Station:%s  Start:%s  End:%s  Credits:%s%n",
+                    w.getWaitlistNum(),
+                       w.getUser().getstudentname(),
+                     vehicleId,
+                        EnumsHandler.formatStationName(w.getLocation()),
+                       w.getStartTime(),
+                        w.getEndTime(),
+                        credits
+                    );
+                }
+           }
 
     /* Removes a waitlist entry by its number. */
     public static void removeWaitlistEntry() {
