@@ -6,6 +6,7 @@ import information.AvailableStations.LOCATION;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -64,5 +65,9 @@ public class WaitlistHandler {
             }
         }
         System.out.println("No waitlist entry with number " + num);
+    }
+
+    public static List<Waitlist> getWaitlists() {
+        return new ArrayList<>(waitlists);
     }
 }

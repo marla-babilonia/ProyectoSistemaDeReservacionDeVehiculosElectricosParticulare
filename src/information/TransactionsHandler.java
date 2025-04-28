@@ -4,12 +4,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import CSVHandlers.CSVLoader;
+
 public class TransactionsHandler {
+
 
     private static final Scanner scanner = new Scanner(System.in);
 
     // LinkedList for transactions
-    private static final LinkedList<Transaction> transactions = new LinkedList<>();
+    private static final LinkedList<Transaction> transactions = CSVLoader.getTransactions();
 
     public static void addTransaction(Transaction transaction) {
         transactions.add(transaction);
@@ -48,7 +51,7 @@ public class TransactionsHandler {
         }
     }
 
-    public static List<Transaction> getAllTransactions() {
-        return new LinkedList<>(transactions); // Return a copy
+    public static LinkedList<Transaction> getAllTransactions() {
+        return new LinkedList<>(transactions); 
     }
 }

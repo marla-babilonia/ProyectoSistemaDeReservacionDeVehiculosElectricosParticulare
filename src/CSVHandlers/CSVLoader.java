@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.Map;
@@ -157,23 +158,68 @@ public class CSVLoader {
         return waitlist;
     }
 
-    // =================================================================
+    public static LinkedList<Transaction> loadTransactions() {
+
+        LinkedList<Transaction> allTransactions = new LinkedList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("resources/transactions.csv"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] p = line.split(",");
+                
+                if (p.length == 9) {
+                    int transactionId   = Integer.parseInt(p[0]);
+                    int clientId    = Integer.parseInt(p[1]);
+                    int ownerId    = Integer.parseInt(p[2]);
+                    int vehicleId    = Integer.parseInt(p[3]);
+                    double credits = Double.parseDouble(p[4]);
+                    int month    = Integer.parseInt(p[5]);
+                    int day    = Integer.parseInt(p[6]);
+                    int startTime     = Integer.parseInt(p[7]);
+                    int endTime     = Integer.parseInt(p[8]);
+
+                    Users client = findUserById(clientId);
+                    Users owner  = findUserById(ownerId);
+                    Vehicles vehicles   = getVehicleById(vehicleId);
+
+                    if (client != null && owner != null && vehicles != null) {
+                        Transaction transaction = new Transaction(client, owner, vehicles, credits, month, day, startTime, endTime);
+                        
+                        transaction.setTransactionId(transactionId);
+                        allTransactions.add(transaction);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allTransactions;
+    }
+
+    
+
     private static final List<Users> users = loadUsers();
     private static final Set<Vehicles> vehicles = loadVehicles();
     private static final List<Reservations> reservations = loadReservations();
+    private static final LinkedList<Transaction> transactions = loadTransactions();
 
     private static Users findUserById(int id) {
         return users.stream()
-                    .filter(u -> u.getstudentid() == id)
-                    .findFirst().orElse(null);
+                .filter(u -> u.getstudentid() == id)
+                .findFirst().orElse(null);
     }
 
     private static Vehicles getVehicleById(int id) {
         return vehicles.stream()
-                       .filter(v -> v.getID() == id)
-                       .findFirst().orElse(null);
+                .filter(v -> v.getID() == id)
+                .findFirst().orElse(null);
     }
     public static List<Reservations> getReservations() {
         return reservations;
     }
+
+    public static LinkedList<Transaction> getTransactions() {
+        return loadTransactions();
+    }
+
+
 }

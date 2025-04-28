@@ -74,4 +74,11 @@ public class Transaction {
                 endTime
         );
     }
+
+    public void setTransactionId(int id) {
+        this.transactionId = id;
+        if (id >= nextTransactionId) {
+            nextTransactionId = id + 1;
+        }
+    }
 }
