@@ -92,11 +92,13 @@ public class Reservations {
 
     @Override
     public String toString() {
+
+        String stationName = (station != null) ? EnumsHandler.formatStationName(station) : "No Station";
         return String.format(
             "Reservation[Student ID=%d, Vehicle ID=%d, Station=%s, Date=%02d/%02d, Start=%04d, End=%04d, Credits=%.1f]",
             student.getstudentid(),
             vehicle.getID(),
-            EnumsHandler.formatStationName(station),
+            stationName,
             month,
             date,
             startTime,

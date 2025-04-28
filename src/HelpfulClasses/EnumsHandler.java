@@ -43,7 +43,7 @@ public class EnumsHandler {
             case EDIFICIO_DE_ADMINISTRACION_DE_EMPRESAS:
                 return "Edificio de Administración de Empresas";
             default:
-                return station.name();
+                return "Unknown Location";
         }
     }
 

@@ -100,12 +100,13 @@ public class Vehicles {
     
     @Override
     public String toString() {
+        String locationName = (location != null) ? EnumsHandler.formatStationName(location) : "Unknown Location";
         return String.format(
             "Vehicle[ID = %d, Owner ID = %d, It's a: %s, It's in: %s, Available? %b, Description = %s]",
             id,
             owner.getstudentid(),
             vehicleType.name(),
-            EnumsHandler.formatStationName(location),
+            locationName,
             available,
             description
         );

@@ -32,13 +32,15 @@ public class CSVUpdater {
     public static void saveVehicles(Set<Vehicles> vehicles) throws IOException {
         try (BufferedWriter w = new BufferedWriter(new FileWriter("resources/vehicles.csv"))) {
             for (Vehicles v : vehicles) {
+                String locationName = (v.getLocation() != null) ? v.getLocation().name() : "UNKNOWN";
+
                 w.write(
                     v.getOwner().getstudentid()   + "," +
-                    v.getID()                     + "," +
-                    v.getVehicleType().name()     + "," +
-                    v.getdescription()            + "," +
-                    v.getLocation().name()        + "," +
-                    v.getavailable()              + "," +
+                    v.getID()     + "," +
+                    v.getVehicleType().name() + "," +
+                    v.getdescription()    + "," +
+                    locationName   + "," +
+                    v.getavailable()    + "," +
                     ScheduleHelper.compressSchedule(v.getSchedule())
                 );
                 w.newLine();
