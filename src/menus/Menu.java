@@ -1,5 +1,6 @@
 package menus;
 
+import information.AvailableStationsHandler;
 import information.ReservationsHandler;
 import information.TransactionsHandler;
 import information.UsersHandler;
@@ -138,7 +139,9 @@ public class Menu {
             System.out.println("2. Add Vehicle");
             System.out.println("3. Remove Vehicle");
             System.out.println("4. Modify Vehicle");
-            System.out.println("5. Go Back");
+            System.out.println("5. View reserved vehicles");
+            System.out.println("6. View vehicles by station");
+            System.out.println("7. Go Back");
 
             System.out.print("Enter option (1-5): ");
             String input = scanner.nextLine().trim();
@@ -154,9 +157,15 @@ public class Menu {
                     VehiclesHandler.removeVehicle();
                     break;
                 case "4":
-                VehiclesHandler.modifyVehicle();
+                    VehiclesHandler.modifyVehicle();
                     break;
                 case "5":
+                        VehiclesHandler.showVehiclesWithReservations();
+                        break;
+                case "6":
+                        AvailableStationsHandler.showStationsWithVehicles();
+                        break;
+                case "7":
                     managingVehicles = false;
                     break;
                 default:
